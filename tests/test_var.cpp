@@ -59,7 +59,7 @@ void test_var() {
         v4 = { 4.5f, 11, 5.6 };
 
         {
-            net::VarContainer cnt;
+            VarContainer cnt;
 
             cnt.SaveVar(v1);
             cnt.SaveVar(v2);
@@ -68,7 +68,7 @@ void test_var() {
 
             assert(cnt.size() == 4);
             pack = cnt.Pack();
-            assert(pack.size() == sizeof(le_uint32) * 2 + 2 * 4 * sizeof(le_uint32) + 2 * sizeof(int) +
+			assert(pack.size() == sizeof(VarContainer::int_type) * 2 + 2 * 4 * sizeof(VarContainer::int_type) + 2 * sizeof(int) +
                                           sizeof(float) + sizeof(S1));
         }
 

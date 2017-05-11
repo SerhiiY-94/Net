@@ -14,7 +14,7 @@ void test_compress() {
         test_buf[i] = 0;
     }
 
-    for (int i = 768; i < test_buf.size(); i++) {
+    for (int i = 768; i < (int)test_buf.size(); i++) {
         test_buf[i] = (uint8_t)(i % 255);
     }
 
