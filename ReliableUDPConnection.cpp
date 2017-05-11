@@ -24,9 +24,9 @@ bool ReliableUDPConnection::SendPacket(const unsigned char data[], int size) {
     const int header_size = 12;
     unsigned char packet[MAX_PACKET_SIZE];
 
-    unsigned int seq		= reliability_system_.local_sequence();
-    unsigned int ack		= reliability_system_.remote_sequence();
-    unsigned int ack_bits	= reliability_system_.GenerateAckBits();
+    unsigned int seq	  = reliability_system_.local_sequence();
+    unsigned int ack	  = reliability_system_.remote_sequence();
+    unsigned int ack_bits = reliability_system_.GenerateAckBits();
 
     WriteHeader(packet, seq, ack, ack_bits);
     memcpy(packet + header_size, data, (size_t)size);

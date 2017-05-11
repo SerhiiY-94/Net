@@ -28,6 +28,8 @@
 
 #define _ENDIANNESS_ LITTLE_ENDIAN
 
+#pragma warning(disable : 4996)
+
 //#undef TEST_BE
 
 namespace net {

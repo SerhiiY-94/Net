@@ -22,7 +22,7 @@ int main() {
     test_http();
     test_packet_queue();
     //test_pcp();
-    test_pmp();
+    //test_pmp();
     test_reliable_udp_connection();
     test_tcp_socket();
     test_types();
