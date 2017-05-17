@@ -1,6 +1,5 @@
 
 #include "Address.cpp"
-#undef IMAGE_ICON
 #include "BitMsg.cpp"
 #include "Compress.cpp"
 #include "HTTPBase.cpp"

@@ -2,11 +2,8 @@
 
 #include <cstring>
 #include <string>
-//#include <sstream>
 
-using namespace net;
-
-std::string HTTPRequest::field(const std::string &name) const {
+std::string net::HTTPRequest::field(const std::string &name) const {
     auto it = header_fields_.find(name);
     if (it != header_fields_.end()) {
         return it->second;
@@ -14,7 +11,7 @@ std::string HTTPRequest::field(const std::string &name) const {
     return "";
 }
 
-bool HTTPRequest::Parse(const char *buf) {
+bool net::HTTPRequest::Parse(const char *buf) {
     if (!strstr(buf, "\r\n\r\n")) {
         return false;
     }

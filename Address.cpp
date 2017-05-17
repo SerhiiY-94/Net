@@ -15,9 +15,7 @@
 	#include <sys/socket.h>
 #endif
 
-using namespace net;
-
-Address::Address(const char *str) : address_(0), port_(0) {
+net::Address::Address(const char *str) : address_(0), port_(0) {
 	long int pport;
 	char hostNameChar[256];
 	if (sscanf(str, "%[^:]:%ld", hostNameChar, &pport) == 2) {
@@ -26,7 +24,7 @@ Address::Address(const char *str) : address_(0), port_(0) {
 	}
 }
 
-std::string Address::str() const {
+std::string net::Address::str() const {
     char buf[128];
     sprintf(buf, "%i.%i.%i.%i:%i", (int)a(), (int)b(), (int)c(), (int)d(), (int)port());
     return std::string(buf);

@@ -42,12 +42,10 @@ namespace {
                    WS_PONG              = 0xA};
 }
 
-using namespace std;
-
 net::WsConnection::WsConnection(TCPSocket &&conn, const HTTPRequest &upgrade_req, bool should_mask)
-        : conn_(move(conn)), should_mask_(should_mask) {
-    string key_hash;
-    string key = upgrade_req.field("Sec-WebSocket-Key");
+        : conn_(std::move(conn)), should_mask_(should_mask) {
+    std::string key_hash;
+    std::string key = upgrade_req.field("Sec-WebSocket-Key");
     if (!key.empty()) {
         key = key + WS_MAGIC;
         unsigned int sha1_digest[5];
@@ -67,11 +65,11 @@ net::WsConnection::WsConnection(TCPSocket &&conn, const HTTPRequest &upgrade_req
 	resp.AddField(_make_unique<SimpleField>("Sec-WebSocket-Version", std::to_string(13)));
 	resp.AddField(_make_unique<SimpleField>("Sec-WebSocket-Protocol", "binary"));
 
-    string answer = resp.str();
+    std::string answer = resp.str();
     conn_.Send(answer.c_str(), (int)answer.length());
 }
 
-WsConnection::WsConnection(WsConnection &&rhs) : conn_(move(rhs.conn_)), on_connection_close(move(rhs.on_connection_close)), should_mask_(rhs.should_mask_) { }
+net::WsConnection::WsConnection(WsConnection &&rhs) : conn_(std::move(rhs.conn_)), on_connection_close(move(rhs.on_connection_close)), should_mask_(rhs.should_mask_) { }
 
 int net::WsConnection::Receive(void *data, int size) {
     int received = conn_.Receive(data, size);

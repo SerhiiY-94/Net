@@ -1,21 +1,18 @@
 #include "HTTPResponse.h"
 
-using namespace net;
-using namespace std;
-
-HTTPResponse::HTTPResponse(int resp_code, const string &status_line)
+net::HTTPResponse::HTTPResponse(int resp_code, const std::string &status_line)
 		: resp_code_(resp_code), status_line_(status_line), content_length_(0) {
 	if (status_line_.empty() && resp_code_ == 200) {
 		status_line_ = "OK";
 	}
 }
 
-void HTTPResponse::AddField(std::unique_ptr<HTTPField> &&field) {
+void net::HTTPResponse::AddField(std::unique_ptr<HTTPField> &&field) {
     fields_.emplace_back(field.release());
 }
 
-string HTTPResponse::str() const {
-	string ret;
+std::string net::HTTPResponse::str() const {
+	std::string ret;
 	ret += "HTTP/1.1 " + std::to_string(resp_code_) + " " + status_line_ + "\r\n";
 
     for (auto &f : fields_) {

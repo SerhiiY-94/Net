@@ -1,4 +1,6 @@
 
+#include <cstdio>
+
 void test_address();
 void test_bitmsg();
 void test_compress();
@@ -16,17 +18,20 @@ void test_var();
 
 int main() {
     test_address();
-    test_bitmsg();
     test_compress();
     test_hton();
     test_http();
     test_packet_queue();
+    test_types();
+    test_var();
+#ifndef __EMSCRIPTEN__
+    test_bitmsg();
     //test_pcp();
     //test_pmp();
     test_reliable_udp_connection();
     test_tcp_socket();
-    test_types();
     test_udp_connection();
     test_udp_socket();
-    test_var();
+#endif
+    puts("OK");
 }

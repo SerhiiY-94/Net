@@ -3,27 +3,27 @@
 #include <cassert>
 #include <cstring>
 
-using namespace net;
+#include <hash/Crc32.h>
 
-UDPConnection::UDPConnection(unsigned int protocol_id, float timeout_s)
+net::UDPConnection::UDPConnection(unsigned int protocol_id, float timeout_s)
 : protocol_id_(protocol_id), timeout_s_(timeout_s), running_(false), mode_(NONE) {
 	ClearData();
 }
 
-UDPConnection::~UDPConnection() {
+net::UDPConnection::~UDPConnection() {
 	if (running_) {
 		Stop();
 	}
 }
 
-void UDPConnection::Start(int port) {
+void net::UDPConnection::Start(int port) {
 	assert(!running_);
 	socket_.Open(port);
 	running_ = true;
 	OnStart();
 }
 
-void UDPConnection::Stop() {
+void net::UDPConnection::Stop() {
 	assert(running_);
 	bool conn = connected();
 	ClearData();
@@ -35,7 +35,7 @@ void UDPConnection::Stop() {
 	OnStop();
 }
 
-void UDPConnection::Listen() {
+void net::UDPConnection::Listen() {
 	bool conn = connected();
 	ClearData();
 	if (conn) {
@@ -45,7 +45,7 @@ void UDPConnection::Listen() {
 	state_	= LISTENING;
 }
 
-void UDPConnection::Connect(const Address &address) {
+void net::UDPConnection::Connect(const Address &address) {
 	printf("client connecting to %d.%d.%d.%d:%d\n", address.a(), address.b(), address.c(), address.d(), address.port());
 	bool conn = connected();
 	ClearData();
@@ -57,7 +57,7 @@ void UDPConnection::Connect(const Address &address) {
 	address_	= address;
 }
 
-void UDPConnection::Update(float dt_s) {
+void net::UDPConnection::Update(float dt_s) {
 	assert(running_);
 	timeout_acc_ += dt_s;
 	if (timeout_acc_ > timeout_s_) {
@@ -77,7 +77,7 @@ void UDPConnection::Update(float dt_s) {
 	}
 }
 
-bool UDPConnection::SendPacket(const unsigned char data[], int size) {
+bool net::UDPConnection::SendPacket(const unsigned char data[], int size) {
 	assert(running_);
 	assert(MAX_PACKET_SIZE >= size + 4);
 	if (address_.address() == 0) {
@@ -88,15 +88,24 @@ bool UDPConnection::SendPacket(const unsigned char data[], int size) {
 	packet[0] = (unsigned char)(protocol_id_ >> 24);
 	packet[1] = (unsigned char)((protocol_id_ >> 16) & 0xFF);
 	packet[2] = (unsigned char)((protocol_id_ >> 8) & 0xFF);
-	packet[3] = (unsigned char)((protocol_id_)& 0xFF);
+	packet[3] = (unsigned char)((protocol_id_) & 0xFF);
 	memcpy(&packet[4], data, size);
+
+	{	// compute crc32 and use it instead protocol id
+		uint32_t crc = crc32_fast(packet, size + 4);
+		packet[0] = (unsigned char)(crc >> 24);
+		packet[1] = (unsigned char)((crc >> 16) & 0xFF);
+		packet[2] = (unsigned char)((crc >> 8) & 0xFF);
+		packet[3] = (unsigned char)((crc) & 0xFF);
+	}
+
 	return socket_.Send(address_, packet, size + 4);
 #else
     return socket_.Send(address_, data, size);
 #endif
 }
 
-int UDPConnection::ReceivePacket(unsigned char data[], int size) {
+int net::UDPConnection::ReceivePacket(unsigned char data[], int size) {
     Address sender;
 	assert(running_);
 #ifndef __EMSCRIPTEN__
@@ -107,10 +116,22 @@ int UDPConnection::ReceivePacket(unsigned char data[], int size) {
 		return 0;
 	}
 
-	if (packet[0] != (unsigned char)(protocol_id_ >> 24) || packet[1] != (unsigned char)((protocol_id_ >> 16) & 0xFF) ||
-		packet[2] != (unsigned char)((protocol_id_ >> 8) & 0xFF) || packet[3] != (unsigned char)(protocol_id_ & 0xFF)) {
-		return 0;
+	{	// check protocol id hashsum
+		uint32_t crc = (((unsigned int)packet[0] << 24) | ((unsigned int)packet[1] << 16) |
+						((unsigned int)packet[2] << 8) | ((unsigned int)packet[3]));
+
+		packet[0] = (unsigned char)(protocol_id_ >> 24);
+		packet[1] = (unsigned char)((protocol_id_ >> 16) & 0xFF);
+		packet[2] = (unsigned char)((protocol_id_ >> 8) & 0xFF);
+		packet[3] = (unsigned char)((protocol_id_)& 0xFF);
+
+		uint32_t crc_check = crc32_fast(packet, bytes_read);
+
+		if (crc != crc_check) {
+			return 0;
+		}
 	}
+
 #else
     int bytes_read = socket_.Receive(sender, data, size);
 #endif

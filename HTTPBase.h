@@ -20,22 +20,22 @@ namespace net {
 	};
 	class ContentType : public HTTPField {
 	public:
-		enum Type { TEXT_HTML = 0, TEXT_CSS, IMAGE_ICON, IMAGE_PNG, UNKNOWN };
+		enum eType { TextHTML = 0, TextCSS, ImageIcon, ImagePNG, Unknown };
         struct StrType {
-            Type t;
+            eType t;
             char ext[8], str[32];
-            StrType(Type t, const char *e, const char *s) : t (t) {
+            StrType(eType t, const char *e, const char *s) : t (t) {
                 strcpy(ext, e); strcpy(str, s);
             }
         };
 		enum Charset { UTF_8 };
-		Type type;
+		eType type;
 		Charset charset;
-		ContentType() : HTTPField("Content-Type"), type(TEXT_HTML), charset(UTF_8) {}
+		ContentType() : HTTPField("Content-Type"), type(TextHTML), charset(UTF_8) {}
 		virtual std::string str() const {
 			std::string ret;
 			ret += TypeString(type) + "; ";
-			if (type == TEXT_HTML && charset == UTF_8) {
+			if (type == TextHTML && charset == UTF_8) {
 				ret += "charset=UTF-8";
 			} else {
                 ret += "charset=ISO-8859-4\r\n";
@@ -45,8 +45,8 @@ namespace net {
 		}
 
         static std::vector<StrType> str_types;
-        static std::string TypeString(Type type);
-        static Type TypeByExt(const char *ext);
+        static std::string TypeString(eType type);
+        static eType TypeByExt(const char *ext);
 	};
     class ContentLen : public HTTPField {
     public:
@@ -95,7 +95,7 @@ namespace net {
             content_len_.len = len;
         }
 
-        void set_type(ContentType::Type type) {
+        void set_type(ContentType::eType type) {
             content_type_.type = type;
         }
 	};

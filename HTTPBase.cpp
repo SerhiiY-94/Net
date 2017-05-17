@@ -3,15 +3,13 @@
 
 #include <cstring>
 
-using namespace net;
-
 //const char *ContentType::str_type[] {"text/html", "image/x-icon", "image/png"};
-std::vector<ContentType::StrType> ContentType::str_types = {{TEXT_HTML, "html", "text/html"},
-                                                            {TEXT_CSS, "css", "text/css"},
-                                                            {IMAGE_ICON, "ico", "image/x-icon"},
-                                                            {IMAGE_PNG, "png", "image/png"}};
+std::vector<net::ContentType::StrType> net::ContentType::str_types = {{TextHTML, "html", "text/html"},
+																	  {TextCSS, "css", "text/css"},
+																	  {ImageIcon, "ico", "image/x-icon"},
+																	  {ImagePNG, "png", "image/png"}};
 
-std::string ContentType::TypeString(Type type) {
+std::string net::ContentType::TypeString(eType type) {
     if (type < str_types.size() && str_types[type].t == type) {
         return str_types[type].str;
     }
@@ -23,7 +21,7 @@ std::string ContentType::TypeString(Type type) {
     return "";
 }
 
-ContentType::Type ContentType::TypeByExt(const char *ext) {
+net::ContentType::eType net::ContentType::TypeByExt(const char *ext) {
     /*if (strcmp(ext, "html") == 0) {
         return TEXT_HTML;
     } else if (strcmp(ext, "ico") == 0) {
@@ -38,5 +36,5 @@ ContentType::Type ContentType::TypeByExt(const char *ext) {
             return str_types[i].t;
         }
     }
-	return ContentType::Type::UNKNOWN;
+	return ContentType::eType::Unknown;
 }

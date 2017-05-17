@@ -2,10 +2,8 @@
 
 #include <stdexcept>
 
-using namespace net;
-
 template<>
-void VarContainer::SaveVar<VarContainer>(const Var<VarContainer> &v) {
+void net::VarContainer::SaveVar<net::VarContainer>(const Var<VarContainer> &v) {
     assert(CheckHashes(v.hash_.hash));
 	Packet pack = v.Pack();
 
@@ -16,7 +14,7 @@ void VarContainer::SaveVar<VarContainer>(const Var<VarContainer> &v) {
 }
 
 template<>
-bool VarContainer::LoadVar<VarContainer>(Var<VarContainer> &v) const {
+bool net::VarContainer::LoadVar<net::VarContainer>(Var<VarContainer> &v) const {
     for (unsigned int i = 0; i < header_.size(); i += 2) {
         if (header_[i] == (int_type)v.hash_.hash) {
             size_t len = i < header_.size() - 2 ? (header_[(i + 2) + 1] - header_[i + 1]) : (data_bytes_.size() - header_[i + 1]);
@@ -27,7 +25,7 @@ bool VarContainer::LoadVar<VarContainer>(Var<VarContainer> &v) const {
     return false;
 }
 
-Packet VarContainer::Pack() const {
+net::Packet net::VarContainer::Pack() const {
 	Packet dst;
 
 	int_type num_vars     = (int_type)header_.size() / 2;
@@ -48,11 +46,11 @@ Packet VarContainer::Pack() const {
 
     return dst;
 }
-bool VarContainer::UnPack(const Packet &pack) {
+bool net::VarContainer::UnPack(const Packet &pack) {
 	return UnPack(&pack[0], pack.size());
 }
 
-bool VarContainer::UnPack(const unsigned char *pack, size_t len) {
+bool net::VarContainer::UnPack(const unsigned char *pack, size_t len) {
     if (len < 8) return false;
 
 	int_type num_vars, data_size;
@@ -75,11 +73,11 @@ bool VarContainer::UnPack(const unsigned char *pack, size_t len) {
 	return true;
 }
 
-size_t VarContainer::size() const {
+size_t net::VarContainer::size() const {
 	return header_.size() / 2;
 }
 
-void VarContainer::clear() {
+void net::VarContainer::clear() {
 	header_.clear();
 	data_bytes_.clear();
 }

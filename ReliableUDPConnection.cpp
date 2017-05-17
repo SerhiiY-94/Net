@@ -2,20 +2,18 @@
 
 #include <cstring>
 
-using namespace net;
-
-ReliableUDPConnection::ReliableUDPConnection(unsigned int protocol_id, float timeout, unsigned int max_sequence)
+net::ReliableUDPConnection::ReliableUDPConnection(unsigned int protocol_id, float timeout, unsigned int max_sequence)
 		: UDPConnection(protocol_id, timeout), packet_loss_mask_(0), reliability_system_(max_sequence) {
 	ClearData();
 }
 
-ReliableUDPConnection::~ReliableUDPConnection() {
+net::ReliableUDPConnection::~ReliableUDPConnection() {
     if (running()) {
         Stop();
     }
 }
 
-bool ReliableUDPConnection::SendPacket(const unsigned char data[], int size) {
+bool net::ReliableUDPConnection::SendPacket(const unsigned char data[], int size) {
 #ifndef __EMSCRIPTEN__
 	if (reliability_system_.local_sequence() & packet_loss_mask_) {
 		reliability_system_.PacketSent(nullptr, size);
@@ -40,7 +38,7 @@ bool ReliableUDPConnection::SendPacket(const unsigned char data[], int size) {
 #endif
 }
 
-int ReliableUDPConnection::ReceivePacket(unsigned char data[], int size) {
+int net::ReliableUDPConnection::ReceivePacket(unsigned char data[], int size) {
 #ifndef __EMSCRIPTEN__
     const int header_size = 12;
     if (size <= header_size) {
@@ -65,31 +63,31 @@ int ReliableUDPConnection::ReceivePacket(unsigned char data[], int size) {
 #endif
 }
 
-void ReliableUDPConnection::Update(float dt_s) {
+void net::ReliableUDPConnection::Update(float dt_s) {
     UDPConnection::Update(dt_s);
     reliability_system_.Update(dt_s);
 }
 
-void ReliableUDPConnection::WriteInteger(unsigned char *data, unsigned int value) {
+void net::ReliableUDPConnection::WriteInteger(unsigned char *data, unsigned int value) {
     data[0] = (unsigned char) (value >> 24);
     data[1] = (unsigned char) ((value >> 16) & 0xFF);
     data[2] = (unsigned char) ((value >> 8) & 0xFF);
     data[3] = (unsigned char) (value & 0xFF);
 }
 
-void ReliableUDPConnection::WriteHeader(unsigned char *header, unsigned int sequence, unsigned int ack,
+void net::ReliableUDPConnection::WriteHeader(unsigned char *header, unsigned int sequence, unsigned int ack,
                                      unsigned int ack_bits) {
     WriteInteger(header, sequence);
     WriteInteger(header + 4, ack);
     WriteInteger(header + 8, ack_bits);
 }
 
-void ReliableUDPConnection::ReadInteger(const unsigned char *data, unsigned int &value) {
+void net::ReliableUDPConnection::ReadInteger(const unsigned char *data, unsigned int &value) {
     value = (((unsigned int) data[0] << 24) | ((unsigned int) data[1] << 16) |
              ((unsigned int) data[2] << 8) | ((unsigned int) data[3]));
 }
 
-void ReliableUDPConnection::ReadHeader(const unsigned char *header, unsigned int &sequence, unsigned int &ack,
+void net::ReliableUDPConnection::ReadHeader(const unsigned char *header, unsigned int &sequence, unsigned int &ack,
                                     unsigned int &ack_bits) {
     ReadInteger(header, sequence);
     ReadInteger(header + 4, ack);
