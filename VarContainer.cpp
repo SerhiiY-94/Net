@@ -7,8 +7,8 @@ void net::VarContainer::SaveVar<net::VarContainer>(const Var<VarContainer> &v) {
     assert(CheckHashes(v.hash_.hash));
 	Packet pack = v.Pack();
 
-	header_.push_back(v.hash_.hash);
-	header_.push_back(data_bytes_.size());
+	header_.push_back((int_type)v.hash_.hash);
+	header_.push_back((int_type)data_bytes_.size());
 
 	data_bytes_.insert(data_bytes_.end(), pack.begin(), pack.end());
 }
