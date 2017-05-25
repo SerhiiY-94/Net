@@ -7,6 +7,7 @@ include_directories("../")
 
 set(SOURCE_FILES	Address.h
                     Address.cpp
+                    IConnection.h
                     Socket.h
 					Socket.cpp
                     UDPConnection.h

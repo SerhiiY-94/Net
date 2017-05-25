@@ -1,5 +1,4 @@
-#ifndef TYPES_H
-#define TYPES_H
+#pragma once
 
 #include <climits>
 #include <cstddef>
@@ -121,4 +120,3 @@ struct StrParam {
     }
 };
 
-#endif // TYPES_H

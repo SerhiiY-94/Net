@@ -1,5 +1,4 @@
-#ifndef RELIABILITYSYSTEM_H
-#define RELIABILITYSYSTEM_H
+#pragma once
 
 #include <vector>
 #include "PacketQueue.h"
@@ -89,4 +88,3 @@ private:
 };
 }
 
-#endif  // RELIABILITYSYSTEM_H

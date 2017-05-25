@@ -1,11 +1,11 @@
-#ifndef UDP_CONNECTION_H
-#define UDP_CONNECTION_H
+#pragma once
 
+#include "IConnection.h"
 #include "Socket.h"
 
 namespace net {
 	const int MAX_PACKET_SIZE = 4096;
-	class UDPConnection {
+	class UDPConnection : public IConnection {
 	public:
 		enum Mode { NONE, CLIENT, SERVER };
 
@@ -14,14 +14,14 @@ namespace net {
 
 		const UDPSocket &socket() const { return socket_; }
 
-		void Start(int port);
+		void Start(int port) override;
 		void Stop();
 		void Listen();
-		void Connect(const Address &address);
-		virtual void Update(float dt_s);
+		void Connect(const Address &address) override;
+		void Update(float dt_s) override;
 
-		virtual bool SendPacket(const unsigned char data[], int size);
-		virtual int ReceivePacket(unsigned char data[], int size);
+		bool SendPacket(const unsigned char data[], int size) override;
+		int ReceivePacket(unsigned char data[], int size) override;
 
 		bool listening() const {
 			return state_ == LISTENING;
@@ -44,23 +44,17 @@ namespace net {
             return running_;
         }
 
-		Address address() const {
+		Address address() const override {
 			return address_;
 		}
 
-		Address local_addr() const {
+		Address local_addr() const override {
 			return socket_.local_addr();
 		}
 
 		float timeout_acc() const {
 			return timeout_acc_;
 		}
-
-	protected:
-		virtual void OnStart() {}
-		virtual void OnStop() {}
-		virtual void OnConnect() {}
-		virtual void OnDisconnect() {}
 	private:
 		void ClearData() {
 			state_ = DISCONNECTED;
@@ -79,5 +73,3 @@ namespace net {
 		Address address_;
 	};
 }
-
-#endif // UDP_CONNECTION_H

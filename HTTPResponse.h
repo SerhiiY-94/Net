@@ -1,5 +1,4 @@
-#ifndef HTTP_RESPONSE_H
-#define HTTP_RESPONSE_H
+#pragma once
 
 #include <memory>
 
@@ -19,5 +18,3 @@ namespace net {
 		std::string str() const;
 	};
 }
-
-#endif // HTTP_RESPONSE_H

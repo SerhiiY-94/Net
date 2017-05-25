@@ -1,5 +1,4 @@
-#ifndef VAR_H
-#define VAR_H
+#pragma once
 
 #include <cstdint>
 #include <cstring>
@@ -149,6 +148,3 @@ public:
 	}
 };
 }
-
-
-#endif // VAR_H

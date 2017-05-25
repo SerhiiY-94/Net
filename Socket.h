@@ -1,5 +1,4 @@
-#ifndef SOCKET_H
-#define SOCKET_H
+#pragma once
 
 #include <memory>
 
@@ -86,4 +85,3 @@ namespace net {
     bool SetBlocking(int sock, bool is_blocking);
 }
 
-#endif //SOCKET_H

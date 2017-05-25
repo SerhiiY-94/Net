@@ -1,5 +1,4 @@
-#ifndef HTTP_REQUEST_H
-#define HTTP_REQUEST_H
+#pragma once
 
 #include <map>
 #include <string>
@@ -33,5 +32,3 @@ namespace net {
 		bool Parse(const char *buf);
 	};
 }
-
-#endif // HTTP_REQUEST_H

@@ -1,5 +1,4 @@
-#ifndef HTTP_BASE_H
-#define HTTP_BASE_H
+#pragma once
 
 #pragma warning(disable : 4996)
 
@@ -100,5 +99,3 @@ namespace net {
         }
 	};
 }
-
-#endif // HTTP_BASE_H

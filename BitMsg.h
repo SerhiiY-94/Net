@@ -1,5 +1,4 @@
-#ifndef BITMSG_H
-#define BITMSG_H
+#pragma once
 
 #include <cstdint>
 #include <cstdlib>
@@ -91,5 +90,3 @@ namespace net {
         return val;
     }
 }
-
-#endif // BITMSG_H

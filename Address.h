@@ -1,5 +1,4 @@
-#ifndef ADDRESS_H
-#define ADDRESS_H
+#pragma once
 
 #include <string>
 
@@ -64,5 +63,3 @@ namespace net {
 		unsigned short port_;
 	};
 }
-
-#endif //ADDRESS_H

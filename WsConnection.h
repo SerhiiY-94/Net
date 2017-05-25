@@ -1,5 +1,4 @@
-#ifndef WSCONNECTION_H
-#define WSCONNECTION_H
+#pragma once
 
 #include <functional>
 
@@ -28,4 +27,3 @@ namespace net {
     };
 }
 
-#endif // WSCONNECTION_H

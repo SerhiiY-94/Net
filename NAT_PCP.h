@@ -1,5 +1,4 @@
-#ifndef NAT_PCP_H
-#define NAT_PCP_H
+#pragma once
 
 #include <cstdint>
 #include <cstring>
@@ -264,5 +263,3 @@ namespace net {
 		static float RT(float rt);
     };
 }
-
-#endif // NAT_PCP_H

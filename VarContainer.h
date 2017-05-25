@@ -1,5 +1,4 @@
-#ifndef VAR_CONTAINER_H
-#define VAR_CONTAINER_H
+#pragma once
 
 #include <cassert>
 #include <vector>
@@ -72,5 +71,3 @@ template<>
 bool VarContainer::LoadVar<VarContainer>(Var<VarContainer> &v) const;
 
 }
-
-#endif // VAR_CONTAINER_H

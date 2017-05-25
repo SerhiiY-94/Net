@@ -1,5 +1,4 @@
-#ifndef PACKETQUEUE_H
-#define PACKETQUEUE_H
+#pragma once
 
 #include <cassert>
 #include <cstdlib>
@@ -71,4 +70,3 @@ namespace net {
     };
 }
 
-#endif // PACKETQUEUE_H

@@ -1,5 +1,4 @@
-#ifndef RELIABLE_UDP_CONNECTION_H
-#define RELIABLE_UDP_CONNECTION_H
+#pragma once
 
 #include "UDPConnection.h"
 #include "ReliabilitySystem.h"
@@ -41,5 +40,3 @@ namespace net {
 		ReliabilitySystem reliability_system_;
 	};
 }
-
-#endif  // RELIABLE_UDP_CONNECTION_H

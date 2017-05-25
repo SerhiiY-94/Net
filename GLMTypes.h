@@ -1,5 +1,4 @@
-#ifndef GLM_TYPES_H
-#define GLM_TYPES_H
+#pragma once
 
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
@@ -98,4 +97,3 @@ namespace net {
 }
 #endif
 
-#endif // GLM_TYPES_H

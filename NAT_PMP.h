@@ -1,5 +1,4 @@
-#ifndef NAT_PMP_H
-#define NAT_PMP_H
+#pragma once
 
 #include <cstdint>
 
@@ -263,4 +262,3 @@ namespace net {
     };
 }
 
-#endif // NAT_PMP_H
