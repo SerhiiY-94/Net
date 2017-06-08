@@ -10,6 +10,7 @@
 #ifdef _WIN32
     #include <winsock2.h>
 	#include <ws2ipdef.h>
+	#include <Ws2tcpip.h>
 #endif
 #if defined(__linux__) || defined(__EMSCRIPTEN__)
     #include <fcntl.h>
@@ -27,7 +28,7 @@
 #ifdef _WIN32
 	typedef int socklen_t;
 	//#define errno WSAGetLastError()
-#else 
+#else
 	#define WSAEWOULDBLOCK 0
 #endif
 
