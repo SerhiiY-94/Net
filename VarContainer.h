@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cassert>
+#include <string>
 #include <vector>
 
 #include "Types.h"
@@ -69,5 +70,10 @@ template<>
 void VarContainer::SaveVar<VarContainer>(const Var<VarContainer> &v);
 template<>
 bool VarContainer::LoadVar<VarContainer>(Var<VarContainer> &v) const;
+
+template<>
+void VarContainer::SaveVar<std::string>(const Var<std::string> &v);
+template<>
+bool VarContainer::LoadVar<std::string>(Var<std::string> &v) const;
 
 }

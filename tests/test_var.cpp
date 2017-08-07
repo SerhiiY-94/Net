@@ -212,4 +212,16 @@ void test_var() {
         cnt.LoadVar(s2);
         assert(s2.number == state.number);
     }
+
+    {   // VarContainer string
+        net::VarContainer cnt;
+
+        net::Var<std::string> s1 = { "String", "qwe" };
+        cnt.SaveVar(s1);
+
+        net::Var<std::string> s2 = { "String" };
+        cnt.LoadVar(s2);
+
+        assert(s1 == s2);
+    }
 }

@@ -25,6 +25,29 @@ bool net::VarContainer::LoadVar<net::VarContainer>(Var<VarContainer> &v) const {
     return false;
 }
 
+template<>
+void net::VarContainer::SaveVar<std::string>(const Var<std::string> &v) {
+    assert(CheckHashes(v.hash_.hash));
+
+    header_.push_back((int_type)v.hash_.hash);
+    header_.push_back((int_type)data_bytes_.size());
+
+    data_bytes_.insert(data_bytes_.end(), v.begin(), v.end());
+}
+
+template<>
+bool net::VarContainer::LoadVar<std::string>(Var<std::string> &v) const {
+    for (unsigned int i = 0; i < header_.size(); i += 2) {
+        if (header_[i] == (int_type)v.hash_.hash) {
+            const char *beg = (const char *)&data_bytes_[header_[i + 1]];
+            size_t n = (i + 2 < header_.size()) ? header_[i + 2 + 1] : (data_bytes_.size() - header_[i + 1]);
+            v = std::string(beg, n);
+            return true;
+        }
+    }
+    return false;
+}
+
 net::Packet net::VarContainer::Pack() const {
 	Packet dst;
 
