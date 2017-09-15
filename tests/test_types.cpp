@@ -1,7 +1,7 @@
 #include "test_common.h"
 
 #define TEST_BE
-#include "../GLMTypes.h"
+#include "../Types.h"
 
 void test_types() {
     // Check endianness conversion
@@ -52,7 +52,7 @@ void test_types() {
         assert(v2 < v1);
     }
     // Just check if it compiles or not
-    glm::vec2 v2_1;
+    /*glm::vec2 v2_1;
     glm::vec3 v3_1;
     net::le_float32 f1;
     net::le_vec2 v2_2;
@@ -126,5 +126,5 @@ void test_types() {
 
     {   // check hton
 
-    }
+    }*/
 }

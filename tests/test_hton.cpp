@@ -1,6 +1,6 @@
 #include "test_common.h"
 
-#include "../GLMTypes.h"
+#include "../Types.h"
 
 void test_hton() {
     using namespace net;
