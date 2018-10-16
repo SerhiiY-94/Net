@@ -3,31 +3,29 @@ project(Net)
 
 set(CMAKE_CXX_STANDARD  11)
 
-#add_definitions(-DSHINY_IS_COMPILED=FALSE)
-
-set(SOURCE_FILES	Address.h
+set(SOURCE_FILES    Address.h
                     Address.cpp
                     IConnection.h
                     Socket.h
-					Socket.cpp
+                    Socket.cpp
                     UDPConnection.h
-					UDPConnection.cpp
+                    UDPConnection.cpp
                     PacketQueue.h
                     ReliabilitySystem.h
-					ReliabilitySystem.cpp
+                    ReliabilitySystem.cpp
                     ReliableUDPConnection.h
-					ReliableUDPConnection.cpp
+                    ReliableUDPConnection.cpp
                     Var.h
-			        VarContainer.h
-					VarContainer.cpp
+                    VarContainer.h
+                    VarContainer.cpp
                     HTTPBase.h
-			        HTTPRequest.h
-			        HTTPResponse.h
-					HTTPBase.cpp
-					HTTPRequest.cpp
-					HTTPResponse.cpp
+                    HTTPRequest.h
+                    HTTPResponse.h
+                    HTTPBase.cpp
+                    HTTPRequest.cpp
+                    HTTPResponse.cpp
                     BitMsg.h
-					BitMsg.cpp
+                    BitMsg.cpp
                     Types.h GLMTypes.h
                     Compress.h
                     Compress.cpp
@@ -38,19 +36,19 @@ set(SOURCE_FILES	Address.h
                     WsConnection.h
                     WsConnection.cpp)
 
-set(HASH_SOURCE_FILES	hash/base64.h
-						hash/base64.cpp
-						hash/Crc32.h
-						hash/Crc32.cpp
-						hash/md5.h
-						hash/md5.cpp
-						hash/sha1.h
-						hash/sha1.cpp)
+set(HASH_SOURCE_FILES   hash/base64.h
+                        hash/base64.cpp
+                        hash/Crc32.h
+                        hash/Crc32.cpp
+                        hash/md5.h
+                        hash/md5.cpp
+                        hash/sha1.h
+                        hash/sha1.cpp)
 
-set(LZO_SOURCE_FILES	minilzo/lzoconf.h
-						minilzo/lzodefs.h
-						minilzo/minilzo.h
-						minilzo/minilzo.c)
+set(LZO_SOURCE_FILES    minilzo/lzoconf.h
+                        minilzo/lzodefs.h
+                        minilzo/minilzo.h
+                        minilzo/minilzo.c)
 
 list(APPEND ALL_SOURCE_FILES ${SOURCE_FILES})
 set_source_files_properties(${SOURCE_FILES} PROPERTIES HEADER_FILE_ONLY TRUE)

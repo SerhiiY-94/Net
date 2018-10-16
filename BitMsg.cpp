@@ -22,20 +22,20 @@ namespace {
 Net::BitMsg::BitMsg(uint8_t *p_data, size_t len) : write_bit_(0),
                                               read_bit_(0),
                                               read_pos_(0),
-											  temp_val_(0),
+                                              temp_val_(0),
                                               write_data_(p_data),
                                               read_data_(p_data),
-											  len_(0),
-											  cap_(len) {}
+                                              len_(0),
+                                              cap_(len) {}
 
 Net::BitMsg::BitMsg(const uint8_t *p_data, size_t len) : write_bit_(0),
                                                     read_bit_(0),
                                                     read_pos_(0),
-													temp_val_(0),
+                                                    temp_val_(0),
                                                     write_data_(nullptr),
                                                     read_data_(p_data),
-													len_(len),
-													cap_(len) {}
+                                                    len_(len),
+                                                    cap_(len) {}
 
 void Net::BitMsg::WriteBits(int val, int num_bits) {
     assert(write_data_);

@@ -40,11 +40,11 @@ void test_reliable_udp_connection() {
             packet_queue.insert_sorted(data, maximum_sequence);
         }
         assert(packet_queue.size() == 32);
-        assert(Net::ReliabilitySystem::generate_ack_bits(0,	packet_queue, maximum_sequence) == 0xFFFFFFFF);
-        assert(Net::ReliabilitySystem::generate_ack_bits(255,	packet_queue, maximum_sequence) == 0x7FFFFFFF);
-        assert(Net::ReliabilitySystem::generate_ack_bits(1,	packet_queue, maximum_sequence) == 0xFFFFFFFE);
-        assert(Net::ReliabilitySystem::generate_ack_bits(240,	packet_queue, maximum_sequence) == 0x0000FFFF);
-        assert(Net::ReliabilitySystem::generate_ack_bits(16,	packet_queue, maximum_sequence) == 0xFFFF0000);
+        assert(Net::ReliabilitySystem::generate_ack_bits(0, packet_queue, maximum_sequence) == 0xFFFFFFFF);
+        assert(Net::ReliabilitySystem::generate_ack_bits(255,   packet_queue, maximum_sequence) == 0x7FFFFFFF);
+        assert(Net::ReliabilitySystem::generate_ack_bits(1, packet_queue, maximum_sequence) == 0xFFFFFFFE);
+        assert(Net::ReliabilitySystem::generate_ack_bits(240,   packet_queue, maximum_sequence) == 0x0000FFFF);
+        assert(Net::ReliabilitySystem::generate_ack_bits(16,    packet_queue, maximum_sequence) == 0xFFFF0000);
     }
 
     {   // Check process ack (1)
@@ -224,10 +224,10 @@ void test_reliable_udp_connection() {
     }
 
     {   // Test join
-        const int server_port	= 30000;
-        const int client_port	= 30001;
-        const int protocol_id	= 0x11112222;
-        const float dt_s		= 0.001f;
+        const int server_port   = 30000;
+        const int client_port   = 30001;
+        const int protocol_id   = 0x11112222;
+        const float dt_s        = 0.001f;
         const float timeout_s_s = 1.0f;
 
         Net::ReliableUDPConnection client(protocol_id, timeout_s_s);
@@ -276,10 +276,10 @@ void test_reliable_udp_connection() {
     }
 
     {   // Test payload
-        const int server_port	= 30000;
-        const int client_port	= 30001;
-        const int protocol_id	= 0x11112222;
-        const float dt_s		= 0.001f;
+        const int server_port   = 30000;
+        const int client_port   = 30001;
+        const int protocol_id   = 0x11112222;
+        const float dt_s        = 0.001f;
         const float timeout_s_s = 0.1f;
 
         Net::ReliableUDPConnection client(protocol_id, timeout_s_s);
@@ -330,11 +330,11 @@ void test_reliable_udp_connection() {
     }
 
     {   // Test acks
-        const int server_port	= 30000;
-        const int client_port	= 30001;
-        const int protocol_id	= 0x11112222;
-        const float dt_s		= 0.001f;
-        const float timeout_s	= 0.1f;
+        const int server_port   = 30000;
+        const int client_port   = 30001;
+        const int protocol_id   = 0x11112222;
+        const float dt_s        = 0.001f;
+        const float timeout_s   = 0.1f;
         const unsigned int packet_count = 100;
 
         Net::ReliableUDPConnection client(protocol_id, timeout_s);
@@ -427,11 +427,11 @@ void test_reliable_udp_connection() {
     }
 
     {   // Test ack bits
-        const int server_port	= 30000;
-        const int client_port	= 30001;
-        const int protocol_id	= 0x11112222;
-        const float dt_s		= 0.001f;
-        const float timeout_s	= 0.1f;
+        const int server_port   = 30000;
+        const int client_port   = 30001;
+        const int protocol_id   = 0x11112222;
+        const float dt_s        = 0.001f;
+        const float timeout_s   = 0.1f;
         const unsigned int packet_count = 100;
 
         Net::ReliableUDPConnection client(protocol_id, timeout_s);
@@ -538,11 +538,11 @@ void test_reliable_udp_connection() {
     }
 
     {   // Test packet loss
-        const int server_port	= 30000;
-        const int client_port	= 30001;
-        const int protocol_id	= 0x11112222;
-        const float dt_s		= 0.001f;
-        const float timeout_s	= 0.1f;
+        const int server_port   = 30000;
+        const int client_port   = 30001;
+        const int protocol_id   = 0x11112222;
+        const float dt_s        = 0.001f;
+        const float timeout_s   = 0.1f;
         const unsigned int packet_count = 100;
 
         Net::ReliableUDPConnection client(protocol_id, timeout_s);
@@ -656,13 +656,13 @@ void test_reliable_udp_connection() {
     }
 
     {   // Test sequence wrap around
-        const int server_port	= 30000;
-        const int client_port	= 30001;
-        const int protocol_id	= 0x11112222;
-        const float dt_s		= 0.05f;
-        const float timeout_s	= 1000.0f;
+        const int server_port   = 30000;
+        const int client_port   = 30001;
+        const int protocol_id   = 0x11112222;
+        const float dt_s        = 0.05f;
+        const float timeout_s   = 1000.0f;
         const unsigned int packet_count = 256;
-        const unsigned int max_sequence = 31;		// [0,31]
+        const unsigned int max_sequence = 31;       // [0,31]
 
         Net::ReliableUDPConnection client(protocol_id, timeout_s, max_sequence);
         Net::ReliableUDPConnection server(protocol_id, timeout_s, max_sequence);

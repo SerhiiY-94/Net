@@ -215,7 +215,7 @@ namespace Net {
         }
     };
 
-	static_assert(sizeof(PMPUnsupportedVersionResponse) == 8, "!");
+    static_assert(sizeof(PMPUnsupportedVersionResponse) == 8, "!");
 
     class PMPSession {
     public:

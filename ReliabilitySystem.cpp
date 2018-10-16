@@ -31,7 +31,7 @@ void Net::ReliabilitySystem::PacketSent(void *data, int size) {
     assert(!sent_queue_.exists(local_sequence_));
     assert(!pending_ack_queue_.exists(local_sequence_));
 
-	PacketData pdata(local_sequence_, 0, size);
+    PacketData pdata(local_sequence_, 0, size);
 
     sent_queue_.push_back(pdata);
     pending_ack_queue_.push_back(pdata);
@@ -48,7 +48,7 @@ void Net::ReliabilitySystem::PacketReceived(unsigned int sequence, int size) {
         return;
     }
 
-	PacketData data(sequence, 0, size);
+    PacketData data(sequence, 0, size);
 
     received_queue_.push_back(data);
     if(sequence_more_recent(sequence, remote_sequence_, max_sequence_)) {
@@ -108,12 +108,12 @@ void Net::ReliabilitySystem::UpdateQueues() {
 void Net::ReliabilitySystem::UpdateStats() {
     int sent_bytes_per_second = 0;
 
-	for (PacketQueue::iterator it = sent_queue_.begin(); it != sent_queue_.end(); ++it) {
-		sent_bytes_per_second += it->size;
-	}
+    for (PacketQueue::iterator it = sent_queue_.begin(); it != sent_queue_.end(); ++it) {
+        sent_bytes_per_second += it->size;
+    }
 
-    int acked_packets_per_second	= 0;
-    int acked_bytes_per_second		= 0;
+    int acked_packets_per_second    = 0;
+    int acked_bytes_per_second      = 0;
 
     for (PacketQueue::iterator it = acked_queue_.begin(); it != acked_queue_.end(); ++it) {
         if (it->time >= rtt_maximum_) {
@@ -129,9 +129,9 @@ void Net::ReliabilitySystem::UpdateStats() {
 }
 
 void Net::ReliabilitySystem::GetAcks(unsigned int **acks, int &count) {
-	if (!acks_.empty()) {
-		*acks = &acks_[0];
-	}
+    if (!acks_.empty()) {
+        *acks = &acks_[0];
+    }
     count = (int)acks_.size();
 }
 
@@ -166,13 +166,13 @@ unsigned int Net::ReliabilitySystem::generate_ack_bits(unsigned int ack,
 }
 
 void Net::ReliabilitySystem::process_ack(unsigned int ack,
-										 unsigned int ack_bits,
-										 PacketQueue &pending_ack_queue,
-										 PacketQueue &acked_queue,
-										 std::vector<unsigned int> &acks,
-										 unsigned int &acked_packets,
-										 float &rtt,
-										 unsigned int max_sequence) {
+                                         unsigned int ack_bits,
+                                         PacketQueue &pending_ack_queue,
+                                         PacketQueue &acked_queue,
+                                         std::vector<unsigned int> &acks,
+                                         unsigned int &acked_packets,
+                                         float &rtt,
+                                         unsigned int max_sequence) {
     if (pending_ack_queue.empty()) {
         return;
     }

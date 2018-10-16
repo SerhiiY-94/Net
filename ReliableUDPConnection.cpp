@@ -3,8 +3,8 @@
 #include <cstring>
 
 Net::ReliableUDPConnection::ReliableUDPConnection(unsigned int protocol_id, float timeout, unsigned int max_sequence)
-		: UDPConnection(protocol_id, timeout), packet_loss_mask_(0), reliability_system_(max_sequence) {
-	ClearData();
+        : UDPConnection(protocol_id, timeout), packet_loss_mask_(0), reliability_system_(max_sequence) {
+    ClearData();
 }
 
 Net::ReliableUDPConnection::~ReliableUDPConnection() {
@@ -15,15 +15,15 @@ Net::ReliableUDPConnection::~ReliableUDPConnection() {
 
 bool Net::ReliableUDPConnection::SendPacket(const unsigned char data[], int size) {
 #ifndef __EMSCRIPTEN__
-	if (reliability_system_.local_sequence() & packet_loss_mask_) {
-		reliability_system_.PacketSent(nullptr, size);
-		return true;
-	}
+    if (reliability_system_.local_sequence() & packet_loss_mask_) {
+        reliability_system_.PacketSent(nullptr, size);
+        return true;
+    }
     const int header_size = 12;
     unsigned char packet[MAX_PACKET_SIZE];
 
-    unsigned int seq	  = reliability_system_.local_sequence();
-    unsigned int ack	  = reliability_system_.remote_sequence();
+    unsigned int seq      = reliability_system_.local_sequence();
+    unsigned int ack      = reliability_system_.remote_sequence();
     unsigned int ack_bits = reliability_system_.GenerateAckBits();
 
     WriteHeader(packet, seq, ack, ack_bits);

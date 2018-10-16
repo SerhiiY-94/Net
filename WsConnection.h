@@ -14,7 +14,7 @@ namespace Net {
         void ApplyMask(uint32_t mask, uint8_t *data, int size);
     public:
         WsConnection(TCPSocket &&conn, const HTTPRequest &upgrade_req, bool should_mask = false);
-		WsConnection(WsConnection &&rhs);
+        WsConnection(WsConnection &&rhs);
 
         Address remote_addr() const {
             return conn_.remote_addr();

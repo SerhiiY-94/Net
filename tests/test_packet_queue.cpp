@@ -4,8 +4,8 @@
 
 class PacketQueueTestsFixture {
 public:
-    const unsigned int	maximum_sequence;
-    Net::PacketQueue	packet_queue;
+    const unsigned int  maximum_sequence;
+    Net::PacketQueue    packet_queue;
 
     PacketQueueTestsFixture() : maximum_sequence(255) { }
 };

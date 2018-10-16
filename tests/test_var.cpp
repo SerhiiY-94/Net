@@ -68,7 +68,7 @@ void test_var() {
 
             assert(cnt.size() == 4);
             pack = cnt.Pack();
-			assert(pack.size() == sizeof(VarContainer::int_type) * 2 + 2 * 4 * sizeof(VarContainer::int_type) + 2 * sizeof(int) +
+            assert(pack.size() == sizeof(VarContainer::int_type) * 2 + 2 * 4 * sizeof(VarContainer::int_type) + 2 * sizeof(int) +
                                           sizeof(float) + sizeof(S1));
         }
 

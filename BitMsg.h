@@ -21,10 +21,10 @@ namespace Net {
         int remaining_write_bits() const { return (int)(cap_ * 8 - num_bits_written()); }
         int remaining_read_bits() const { return (int)(len_ * 8 - num_bits_read()); }
 
-		/*uint8_t *write_data(size_t &size) {
-			size = len_;
-			return write_data_;
-		}*/
+        /*uint8_t *write_data(size_t &size) {
+            size = len_;
+            return write_data_;
+        }*/
 
         void WriteBits(int val, int num_bits);
         int ReadBits(int num_bits) const;

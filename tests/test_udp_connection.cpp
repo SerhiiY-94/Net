@@ -8,11 +8,11 @@
 void test_udp_connection() {
 
     {   // UDPConnection join
-        const int server_port	= 30000;
-        const int client_port	= 30001;
-        const int protocol_id	= 0x11112222;
-        const float dt_s		= 0.001f;
-        const float timeout_s	= 0.1f;
+        const int server_port   = 30000;
+        const int client_port   = 30001;
+        const int protocol_id   = 0x11112222;
+        const float dt_s        = 0.001f;
+        const float timeout_s   = 0.1f;
 
         Net::UDPConnection client(protocol_id, timeout_s);
         Net::UDPConnection server(protocol_id, timeout_s);
@@ -63,11 +63,11 @@ void test_udp_connection() {
     }
 
     {   // UDPConnection join timeout
-        const int server_port	= 30000;
-        const int client_port	= 30001;
-        const int protocol_id	= 0x11112222;
-        const float dt_s		= 0.001f;
-        const float timeout_s	= 0.1f;
+        const int server_port   = 30000;
+        const int client_port   = 30001;
+        const int protocol_id   = 0x11112222;
+        const float dt_s        = 0.001f;
+        const float timeout_s   = 0.1f;
 
         Net::UDPConnection client(protocol_id, timeout_s);
 

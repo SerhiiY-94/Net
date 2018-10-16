@@ -224,7 +224,7 @@ int Net::PCPResponse::Write(void *buf, int size) const {
     p[0] = 2;
 
     // response
-	p[1] = 1 << 7; // 0b10000000
+    p[1] = 1 << 7; // 0b10000000
 
     // opcode
     p[1] |= opcode_ & 0xFF;
@@ -357,5 +357,5 @@ void Net::PCPSession::Update(unsigned int dt_ms) {
 }
 
 float Net::PCPSession::RT(float rt) {
-	return (1 + RAND()) * std::min<float>(2 * rt, (float)MRT);
+    return (1 + RAND()) * std::min<float>(2 * rt, (float)MRT);
 }

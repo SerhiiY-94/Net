@@ -59,11 +59,11 @@ Net::WsConnection::WsConnection(TCPSocket &&conn, const HTTPRequest &upgrade_req
     }
 
     HTTPResponse resp(101, "Switching Protocols");
-	resp.AddField(_make_unique<SimpleField>("Upgrade", "websocket"));
-	resp.AddField(_make_unique<SimpleField>("Connection", "Upgrade"));
-	resp.AddField(_make_unique<SimpleField>("Sec-WebSocket-Accept", key_hash));
-	resp.AddField(_make_unique<SimpleField>("Sec-WebSocket-Version", std::to_string(13)));
-	resp.AddField(_make_unique<SimpleField>("Sec-WebSocket-Protocol", "binary"));
+    resp.AddField(_make_unique<SimpleField>("Upgrade", "websocket"));
+    resp.AddField(_make_unique<SimpleField>("Connection", "Upgrade"));
+    resp.AddField(_make_unique<SimpleField>("Sec-WebSocket-Accept", key_hash));
+    resp.AddField(_make_unique<SimpleField>("Sec-WebSocket-Version", std::to_string(13)));
+    resp.AddField(_make_unique<SimpleField>("Sec-WebSocket-Protocol", "binary"));
 
     std::string answer = resp.str();
     conn_.Send(answer.c_str(), (int)answer.length());
@@ -111,14 +111,14 @@ int Net::WsConnection::Receive(void *data, int size) {
                 header->opcode = WS_PONG;
                 Send(data, received);
                 return 0;
-			} else {
-				fprintf(stderr, "Unhandled opcode\n");
-				return 0;
-			}
+            } else {
+                fprintf(stderr, "Unhandled opcode\n");
+                return 0;
+            }
         } else {
             // TODO: !!!
             fprintf(stderr, "Fragmented packet received\n");
-			return 0;
+            return 0;
         }
     } else {
         return 0;

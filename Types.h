@@ -88,10 +88,10 @@ namespace Net {
         le_type<T> operator/=(const le_type<T> &f) {
             return le_type<T>((T)le_val_ / (T)f.le_val_);
         }
-		le_type<T>& operator=(const T &f) {
-			le_val_ = Net::swap_endian<T>(f);
-			return *this;
-		}
+        le_type<T>& operator=(const T &f) {
+            le_val_ = Net::swap_endian<T>(f);
+            return *this;
+        }
         /*le_type<T> operator+(const le_type<T> &f1, const le_type<T> &f2) {
             return le_type<T>((T)f1.le_val_ + (T)f2.le_val_);
         }*/

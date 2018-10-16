@@ -5,9 +5,9 @@
 
 //const char *ContentType::str_type[] {"text/html", "image/x-icon", "image/png"};
 std::vector<Net::ContentType::StrType> Net::ContentType::str_types = {{TextHTML, "html", "text/html"},
-																	  {TextCSS, "css", "text/css"},
-																	  {ImageIcon, "ico", "image/x-icon"},
-																	  {ImagePNG, "png", "image/png"}};
+                                                                      {TextCSS, "css", "text/css"},
+                                                                      {ImageIcon, "ico", "image/x-icon"},
+                                                                      {ImagePNG, "png", "image/png"}};
 
 std::string Net::ContentType::TypeString(eType type) {
     if (type < str_types.size() && str_types[type].t == type) {
@@ -36,5 +36,5 @@ Net::ContentType::eType Net::ContentType::TypeByExt(const char *ext) {
             return str_types[i].t;
         }
     }
-	return ContentType::eType::Unknown;
+    return ContentType::eType::Unknown;
 }

@@ -38,9 +38,9 @@ namespace Net {
     struct PCPNonce {
         char _[12];
 
-		PCPNonce() {
-			memset(_, 0, sizeof(_));
-		}
+        PCPNonce() {
+            memset(_, 0, sizeof(_));
+        }
 
         bool operator==(const PCPNonce &rhs) const {
             return memcmp(this, &rhs, sizeof(PCPNonce)) == 0;
@@ -260,6 +260,6 @@ namespace Net {
             return -0.1f + rand() / (RAND_MAX / 0.2f);
         }
 
-		static float RT(float rt);
+        static float RT(float rt);
     };
 }
