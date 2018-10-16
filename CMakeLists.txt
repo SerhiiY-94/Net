@@ -1,11 +1,9 @@
 cmake_minimum_required(VERSION 2.8.4)
-project(net)
+project(Net)
 
 set(CMAKE_CXX_STANDARD  11)
 
 #add_definitions(-DSHINY_IS_COMPILED=FALSE)
-
-include_directories("../")
 
 set(SOURCE_FILES	Address.h
                     Address.cpp
@@ -40,19 +38,39 @@ set(SOURCE_FILES	Address.h
                     WsConnection.h
                     WsConnection.cpp)
 
+set(HASH_SOURCE_FILES	hash/base64.h
+						hash/base64.cpp
+						hash/Crc32.h
+						hash/Crc32.cpp
+						hash/md5.h
+						hash/md5.cpp
+						hash/sha1.h
+						hash/sha1.cpp)
+
+set(LZO_SOURCE_FILES	minilzo/lzoconf.h
+						minilzo/lzodefs.h
+						minilzo/minilzo.h
+						minilzo/minilzo.c)
+
 list(APPEND ALL_SOURCE_FILES ${SOURCE_FILES})
 set_source_files_properties(${SOURCE_FILES} PROPERTIES HEADER_FILE_ONLY TRUE)
 source_group("src" FILES ${SOURCE_FILES})
 
-list(APPEND ALL_SOURCE_FILES _net.cpp)
-source_group("src" FILES _net.cpp)
+list(APPEND ALL_SOURCE_FILES ${HASH_SOURCE_FILES})
+set_source_files_properties(${HASH_SOURCE_FILES} PROPERTIES HEADER_FILE_ONLY TRUE)
+source_group("src\\hash" FILES ${HASH_SOURCE_FILES})
 
-add_library(net STATIC ${ALL_SOURCE_FILES})
-#add_library(net STATIC _unitybuild_.cpp)
+list(APPEND ALL_SOURCE_FILES ${LZO_SOURCE_FILES})
+set_source_files_properties(${LZO_SOURCE_FILES} PROPERTIES HEADER_FILE_ONLY TRUE)
+source_group("src\\minilzo" FILES ${LZO_SOURCE_FILES})
+
+list(APPEND ALL_SOURCE_FILES _Net.cpp)
+source_group("src" FILES _Net.cpp)
+
+add_library(Net STATIC ${ALL_SOURCE_FILES})
 if(WIN32)
-    target_link_libraries(net ws2_32 hash minilzo)
+    target_link_libraries(Net ws2_32)
 else()
-    target_link_libraries(net hash minilzo)
 endif()
 
 add_subdirectory(tests)

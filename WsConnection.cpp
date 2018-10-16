@@ -7,12 +7,12 @@
     #include <netinet/in.h>
 #endif
 
-#include <hash/base64.h>
-#include <hash/sha1.h>
-
 #include "HTTPRequest.h"
 #include "HTTPResponse.h"
 #include "Socket.h"
+
+#include "hash/base64.h"
+#include "hash/sha1.h"
 
 namespace {
     const char WS_MAGIC[] = "258EAFA5-E914-47DA-95CA-C5AB0DC85B11";

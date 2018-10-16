@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8)
-project(test_net)
+project(test_Net)
 
 IF(WIN32)
 ELSE(WIN32)
@@ -23,5 +23,5 @@ set(SRC_FILES main.cpp test_address.cpp
                        test_udp_socket.cpp
                        test_var.cpp)
 
-add_executable(test_net ${SRC_FILES})
-target_link_libraries(test_net ${LIBS} net)
+add_executable(test_Net ${SRC_FILES})
+target_link_libraries(test_Net ${LIBS} Net)

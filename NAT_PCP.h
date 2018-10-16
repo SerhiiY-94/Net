@@ -3,8 +3,8 @@
 #include <cstdint>
 #include <cstring>
 
-#include <net/Address.h>
-#include <net/Socket.h>
+#include "Address.h"
+#include "Socket.h"
 
 namespace net {
     enum PCPOpCode {

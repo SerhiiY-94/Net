@@ -3,7 +3,7 @@
 #include <cassert>
 #include <cstring>
 
-#include <hash/Crc32.h>
+#include "hash/Crc32.h"
 
 net::UDPConnection::UDPConnection(unsigned int protocol_id, float timeout_s)
 : protocol_id_(protocol_id), timeout_s_(timeout_s), running_(false), mode_(NONE) {

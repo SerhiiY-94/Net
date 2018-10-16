@@ -16,10 +16,10 @@ namespace net {
         BitMsg(uint8_t *p_data, size_t len);
         BitMsg(const uint8_t *p_data, size_t len);
 
-        inline int num_bits_written() const { return len_ * 8 + write_bit_; }
-        inline int num_bits_read() const { return (read_pos_ * 8) - ((8 - read_bit_) & 7);}
-        inline int remaining_write_bits() const { return cap_ * 8 - num_bits_written(); }
-        inline int remaining_read_bits() const { return len_ * 8 - num_bits_read(); }
+        int num_bits_written() const { return (int)(len_ * 8 + write_bit_); }
+        int num_bits_read() const { return (read_pos_ * 8) - ((8 - read_bit_) & 7);}
+        int remaining_write_bits() const { return (int)(cap_ * 8 - num_bits_written()); }
+        int remaining_read_bits() const { return (int)(len_ * 8 - num_bits_read()); }
 
 		/*uint8_t *write_data(size_t &size) {
 			size = len_;

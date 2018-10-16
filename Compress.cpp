@@ -4,7 +4,7 @@
 
 #include <atomic>
 
-#include <minilzo/minilzo.h>
+#include "minilzo/minilzo.h"
 
 using namespace net;
 
