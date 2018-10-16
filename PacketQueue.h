@@ -6,7 +6,7 @@
 
 #include <list>
 
-namespace net {
+namespace Net {
     struct PacketData {
         unsigned	sequence;
         float		time;

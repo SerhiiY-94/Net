@@ -3,7 +3,7 @@
 #include <cstdint>
 #include <cstring>
 
-namespace net {
+namespace Net {
 struct Hash {
     uint32_t hash;
 };

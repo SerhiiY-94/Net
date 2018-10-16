@@ -27,14 +27,14 @@ namespace {
 void test_http() {
 
     {   // Parse upgrade to websocket
-        net::HTTPRequest req;
+        Net::HTTPRequest req;
         assert(req.Parse(pack1));
 
-        assert(req.method().type == net::GET);
+        assert(req.method().type == Net::GET);
         assert(req.method().arg == "/");
-        assert(req.method().ver == net::_1_1);
+        assert(req.method().ver == Net::_1_1);
 
-        assert(req.host_addr() == net::Address(192, 168, 0, 102, 30000));
+        assert(req.host_addr() == Net::Address(192, 168, 0, 102, 30000));
 
         assert(req.field("User-Agent") ==
                 "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:48.0) Gecko/20100101 Firefox/48.0");

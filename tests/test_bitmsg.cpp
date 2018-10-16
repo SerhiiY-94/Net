@@ -4,7 +4,7 @@
 
 #include "../BitMsg.h"
 
-class TestMsg : public net::BitMsg {
+class TestMsg : public Net::BitMsg {
     uint8_t buf[256];
 public:
     TestMsg() : BitMsg(buf, sizeof(buf)) {

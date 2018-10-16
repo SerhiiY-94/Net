@@ -4,7 +4,7 @@
 
 #include "Address.h"
 
-namespace net {
+namespace Net {
 	class SocketContext;
 	class UDPSocket {
 		std::shared_ptr<SocketContext> context_;
@@ -36,7 +36,7 @@ namespace net {
 	class TCPSocket {
 		std::shared_ptr<SocketContext> context_;
 		int handle_, connection_;
-        net::Address remote_addr_;
+        Address remote_addr_;
 	public:
 		TCPSocket();
         TCPSocket(TCPSocket &&rhs);

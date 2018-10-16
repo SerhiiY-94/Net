@@ -3,7 +3,7 @@
 #include <vector>
 #include "PacketQueue.h"
 
-namespace net {
+namespace Net {
 class ReliabilitySystem {
 public:
     ReliabilitySystem(unsigned int max_sequence = 0xFFFFFFFF);

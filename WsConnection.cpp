@@ -42,7 +42,7 @@ namespace {
                    WS_PONG              = 0xA};
 }
 
-net::WsConnection::WsConnection(TCPSocket &&conn, const HTTPRequest &upgrade_req, bool should_mask)
+Net::WsConnection::WsConnection(TCPSocket &&conn, const HTTPRequest &upgrade_req, bool should_mask)
         : conn_(std::move(conn)), should_mask_(should_mask) {
     std::string key_hash;
     std::string key = upgrade_req.field("Sec-WebSocket-Key");
@@ -69,9 +69,9 @@ net::WsConnection::WsConnection(TCPSocket &&conn, const HTTPRequest &upgrade_req
     conn_.Send(answer.c_str(), (int)answer.length());
 }
 
-net::WsConnection::WsConnection(WsConnection &&rhs) : conn_(std::move(rhs.conn_)), on_connection_close(move(rhs.on_connection_close)), should_mask_(rhs.should_mask_) { }
+Net::WsConnection::WsConnection(WsConnection &&rhs) : conn_(std::move(rhs.conn_)), on_connection_close(move(rhs.on_connection_close)), should_mask_(rhs.should_mask_) { }
 
-int net::WsConnection::Receive(void *data, int size) {
+int Net::WsConnection::Receive(void *data, int size) {
     int received = conn_.Receive(data, size);
     if (received && received >= sizeof(WsHeader)) {
         WsHeader *header = (WsHeader *)data;
@@ -125,7 +125,7 @@ int net::WsConnection::Receive(void *data, int size) {
     }
 }
 
-bool net::WsConnection::Send(const void *data, int size) {
+bool Net::WsConnection::Send(const void *data, int size) {
     uint8_t buf[2048];
     uint8_t *payload = buf + sizeof(WsHeader);
     WsHeader *header = (WsHeader *)buf;
@@ -154,7 +154,7 @@ bool net::WsConnection::Send(const void *data, int size) {
     return conn_.Send(buf, (int)(uintptr_t(payload - buf) + size));
 }
 
-void net::WsConnection::ApplyMask(uint32_t mask, uint8_t *data, int size) {
+void Net::WsConnection::ApplyMask(uint32_t mask, uint8_t *data, int size) {
     if (!mask) return;
     uint8_t *m = (uint8_t *) &mask;
     for (int i = 0; i < size; i++) {

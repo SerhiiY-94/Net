@@ -5,7 +5,7 @@
 class PacketQueueTestsFixture {
 public:
     const unsigned int	maximum_sequence;
-    net::PacketQueue	packet_queue;
+    Net::PacketQueue	packet_queue;
 
     PacketQueueTestsFixture() : maximum_sequence(255) { }
 };
@@ -16,7 +16,7 @@ void test_packet_queue() {
         PacketQueueTestsFixture f;
 
         for (int i = 0; i < 100; i++) {
-            net::PacketData data(0, 0, 0);
+            Net::PacketData data(0, 0, 0);
             data.sequence = (unsigned)i;
             f.packet_queue.insert_sorted(data, f.maximum_sequence);
             assert(f.packet_queue.verify_sorted(f.maximum_sequence));
@@ -27,7 +27,7 @@ void test_packet_queue() {
         PacketQueueTestsFixture f;
 
         for (int i = 100; i < 0; i++) {
-            net::PacketData data(0, 0, 0);
+            Net::PacketData data(0, 0, 0);
             data.sequence = (unsigned)i;
             f.packet_queue.insert_sorted(data, f.maximum_sequence);
             assert(f.packet_queue.verify_sorted(f.maximum_sequence));
@@ -38,7 +38,7 @@ void test_packet_queue() {
         PacketQueueTestsFixture f;
 
         for (int i = 100; i < 0; i++) {
-            net::PacketData data(0, 0, 0);
+            Net::PacketData data(0, 0, 0);
             data.sequence = (unsigned)(rand() & 0xFF);
             f.packet_queue.insert_sorted(data, f.maximum_sequence);
             assert(f.packet_queue.verify_sorted(f.maximum_sequence));
@@ -49,13 +49,13 @@ void test_packet_queue() {
         PacketQueueTestsFixture f;
 
         for (int i = 200; i <= 255; i++) {
-            net::PacketData data(0, 0, 0);
+            Net::PacketData data(0, 0, 0);
             data.sequence = (unsigned)i;
             f.packet_queue.insert_sorted(data, f.maximum_sequence);
             assert(f.packet_queue.verify_sorted(f.maximum_sequence));
         }
         for (int i = 0; i <= 50; i++) {
-            net::PacketData data(0, 0, 0);
+            Net::PacketData data(0, 0, 0);
             data.sequence = (unsigned)i;
             f.packet_queue.insert_sorted(data, f.maximum_sequence);
             assert(f.packet_queue.verify_sorted(f.maximum_sequence));

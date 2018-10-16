@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 
-namespace net {
+namespace Net {
 	class HTTPField {
 	protected:
 		std::string key_;

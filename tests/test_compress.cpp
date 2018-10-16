@@ -5,7 +5,7 @@
 #include "../Compress.h"
 
 void test_compress() {
-    net::Packet test_buf(1024);
+    Net::Packet test_buf(1024);
     for (int i = 0; i < 256; i++) {
         test_buf[i] = (uint8_t)(i % 255);
     }
@@ -18,11 +18,11 @@ void test_compress() {
         test_buf[i] = (uint8_t)(i % 255);
     }
 
-    net::Packet compr = net::CompressLZO(test_buf);
+    Net::Packet compr = Net::CompressLZO(test_buf);
 
     printf("size before %i, size after %i\n", int(test_buf.size()), int(compr.size()));
 
-    net::Packet decompr = net::DecompressLZO(compr);
+    Net::Packet decompr = Net::DecompressLZO(compr);
 
     assert(decompr.size() == test_buf.size());
     assert(test_buf == decompr);

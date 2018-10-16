@@ -4,12 +4,12 @@
 #include <cstring>
 
 //const char *ContentType::str_type[] {"text/html", "image/x-icon", "image/png"};
-std::vector<net::ContentType::StrType> net::ContentType::str_types = {{TextHTML, "html", "text/html"},
+std::vector<Net::ContentType::StrType> Net::ContentType::str_types = {{TextHTML, "html", "text/html"},
 																	  {TextCSS, "css", "text/css"},
 																	  {ImageIcon, "ico", "image/x-icon"},
 																	  {ImagePNG, "png", "image/png"}};
 
-std::string net::ContentType::TypeString(eType type) {
+std::string Net::ContentType::TypeString(eType type) {
     if (type < str_types.size() && str_types[type].t == type) {
         return str_types[type].str;
     }
@@ -21,7 +21,7 @@ std::string net::ContentType::TypeString(eType type) {
     return "";
 }
 
-net::ContentType::eType net::ContentType::TypeByExt(const char *ext) {
+Net::ContentType::eType Net::ContentType::TypeByExt(const char *ext) {
     /*if (strcmp(ext, "html") == 0) {
         return TEXT_HTML;
     } else if (strcmp(ext, "ico") == 0) {

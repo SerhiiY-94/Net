@@ -19,7 +19,7 @@ namespace {
                                        MFN(0x1C), MFN(0x1D), MFN(0x1E), MFN(0x1F), 0xFFFFFFFF};
 }
 
-net::BitMsg::BitMsg(uint8_t *p_data, size_t len) : write_bit_(0),
+Net::BitMsg::BitMsg(uint8_t *p_data, size_t len) : write_bit_(0),
                                               read_bit_(0),
                                               read_pos_(0),
 											  temp_val_(0),
@@ -28,7 +28,7 @@ net::BitMsg::BitMsg(uint8_t *p_data, size_t len) : write_bit_(0),
 											  len_(0),
 											  cap_(len) {}
 
-net::BitMsg::BitMsg(const uint8_t *p_data, size_t len) : write_bit_(0),
+Net::BitMsg::BitMsg(const uint8_t *p_data, size_t len) : write_bit_(0),
                                                     read_bit_(0),
                                                     read_pos_(0),
 													temp_val_(0),
@@ -37,7 +37,7 @@ net::BitMsg::BitMsg(const uint8_t *p_data, size_t len) : write_bit_(0),
 													len_(len),
 													cap_(len) {}
 
-void net::BitMsg::WriteBits(int val, int num_bits) {
+void Net::BitMsg::WriteBits(int val, int num_bits) {
     assert(write_data_);
 
     if (num_bits == 0 || num_bits < -31 || num_bits > 32) {
@@ -83,7 +83,7 @@ void net::BitMsg::WriteBits(int val, int num_bits) {
     }
 }
 
-int net::BitMsg::ReadBits(int num_bits) const {
+int Net::BitMsg::ReadBits(int num_bits) const {
     if (num_bits == 0 || num_bits < -31 || num_bits > 32) {
         throw std::runtime_error(std::string("Wrong number of bits: ") + std::to_string(num_bits));
     }

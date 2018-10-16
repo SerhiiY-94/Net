@@ -6,12 +6,12 @@
 #include "Types.h"
 
 #if _ENDIANNESS_ == LITTLE_ENDIAN && !defined(TEST_BE)
-namespace net {
+namespace Net {
     typedef glm::vec2 le_vec2;
     typedef glm::vec3 le_vec3;
 }
 #elif _ENDIANNESS_ == BIG_ENDIAN || defined(TEST_BE)
-namespace net {
+namespace Net {
     typedef glm::tvec2<le_float32> le_vec2;
     typedef glm::tvec3<le_float32> le_vec3;
 

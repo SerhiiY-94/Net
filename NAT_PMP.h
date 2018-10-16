@@ -14,7 +14,7 @@
 #include "Socket.h"
 
 
-namespace net {
+namespace Net {
     enum PMPOpCode {
         OP_EXTERNAL_IP_REQUEST = 0,
         OP_MAP_UDP_REQUEST,
@@ -228,26 +228,26 @@ namespace net {
             IDLE_UNSUPPORTED,
         };
 
-        PMPSession(PMPProto proto, const net::Address &gateway_addr,
+        PMPSession(PMPProto proto, const Address &gateway_addr,
                    unsigned short internal_port, unsigned short external_port,
                    unsigned int lifetime = 7200);
 
-        net::Address local_addr() const {
+        Address local_addr() const {
             return sock_.local_addr();
         }
 
         State state() const { return state_; }
 
         unsigned int time() const { return time_; }
-        net::Address external_ip() const { return external_ip_; }
+        Address external_ip() const { return external_ip_; }
 
         void Update(unsigned int dt_ms);
 
     private:
         State state_;
 
-        net::UDPSocket sock_, multicast_listen_sock_;
-        net::Address gateway_addr_, external_ip_;
+        UDPSocket sock_, multicast_listen_sock_;
+        Address gateway_addr_, external_ip_;
 
         unsigned int time_;
 

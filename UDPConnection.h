@@ -3,7 +3,7 @@
 #include "IConnection.h"
 #include "Socket.h"
 
-namespace net {
+namespace Net {
 	const int MAX_PACKET_SIZE = 4096;
 	class UDPConnection : public IConnection {
 	public:

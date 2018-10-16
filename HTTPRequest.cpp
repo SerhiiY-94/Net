@@ -3,7 +3,7 @@
 #include <cstring>
 #include <string>
 
-std::string net::HTTPRequest::field(const std::string &name) const {
+std::string Net::HTTPRequest::field(const std::string &name) const {
     auto it = header_fields_.find(name);
     if (it != header_fields_.end()) {
         return it->second;
@@ -11,7 +11,7 @@ std::string net::HTTPRequest::field(const std::string &name) const {
     return "";
 }
 
-bool net::HTTPRequest::Parse(const char *buf) {
+bool Net::HTTPRequest::Parse(const char *buf) {
     if (!strstr(buf, "\r\n\r\n")) {
         return false;
     }

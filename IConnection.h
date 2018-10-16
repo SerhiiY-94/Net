@@ -2,7 +2,7 @@
 
 #include "Address.h"
 
-namespace net {
+namespace Net {
     class IConnection {
     public:
         virtual void Connect(const Address &address) = 0;

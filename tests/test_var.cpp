@@ -3,7 +3,7 @@
 #include "../VarContainer.h"
 
 void test_var() {
-    using namespace net;
+    using namespace Net;
 
     {   // Var test1
         Var<int> v1 = { "V1" };
@@ -52,10 +52,10 @@ void test_var() {
     {   // VarContainer save/load test
         struct S1 { float x; short s; double d; };
         std::vector<unsigned char> pack;
-        net::Var<int> v1 = { "V1", 12 };
-        net::Var<int> v2 = { "V2", 13 };
-        net::Var<float> v3 = { "V3", 25.251f };
-        net::Var<S1> v4 = { "V4" };
+        Net::Var<int> v1 = { "V1", 12 };
+        Net::Var<int> v2 = { "V2", 13 };
+        Net::Var<float> v3 = { "V3", 25.251f };
+        Net::Var<S1> v4 = { "V4" };
         v4 = { 4.5f, 11, 5.6 };
 
         {
@@ -81,7 +81,7 @@ void test_var() {
         assert(v3 == 15.044f);
         assert(v4.d == -5.6);
 
-        net::VarContainer cnt;
+        Net::VarContainer cnt;
         cnt.UnPack(pack);
         assert(cnt.size() == 4);
 
@@ -102,7 +102,7 @@ void test_var() {
         Var<int> v2 = { "V2", 13 };
         Var<float> v3 = { "V3", 25.251f };
         {
-            net::VarContainer cnt;
+            Net::VarContainer cnt;
 
             cnt.SaveVar(v1);
             cnt.SaveVar(v2);
@@ -203,23 +203,23 @@ void test_var() {
         SomeLargeGameState state;
         state.number = 178;
 
-        net::VarContainer cnt;
-        net::Var<SomeLargeGameState> s1 = { "Variable", state };
+        Net::VarContainer cnt;
+        Net::Var<SomeLargeGameState> s1 = { "Variable", state };
         assert(s1.number == state.number);
         cnt.SaveVar(s1);
 
-        net::Var<SomeLargeGameState> s2 = { "Variable", state };
+        Net::Var<SomeLargeGameState> s2 = { "Variable", state };
         cnt.LoadVar(s2);
         assert(s2.number == state.number);
     }
 
     {   // VarContainer string
-        net::VarContainer cnt;
+        Net::VarContainer cnt;
 
-        net::Var<std::string> s1 = { "String", "qwe" };
+        Net::Var<std::string> s1 = { "String", "qwe" };
         cnt.SaveVar(s1);
 
-        net::Var<std::string> s2 = { "String" };
+        Net::Var<std::string> s2 = { "String" };
         cnt.LoadVar(s2);
 
         assert(s1 == s2);

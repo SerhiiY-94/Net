@@ -32,7 +32,7 @@
 	#define WSAEWOULDBLOCK 0
 #endif
 
-class net::SocketContext {
+class Net::SocketContext {
 public:
     SocketContext() {
 		srand((unsigned int)time(0));
@@ -53,7 +53,7 @@ extern unsigned int g_android_local_ip_address;
 #endif
 
 namespace {
-	std::weak_ptr<net::SocketContext> shrd_context;
+	std::weak_ptr<Net::SocketContext> shrd_context;
 	unsigned int GetLocalAddr() {
 		unsigned int local_addr = 0;
 #ifndef __ANDROID__
@@ -100,7 +100,7 @@ namespace {
 	}
 }
 
-net::UDPSocket::UDPSocket() : handle_(0) {
+Net::UDPSocket::UDPSocket() : handle_(0) {
     if (shrd_context.expired()) {
         shrd_context = context_ = std::make_shared<SocketContext>();
     } else {
@@ -108,11 +108,11 @@ net::UDPSocket::UDPSocket() : handle_(0) {
     }
 }
 
-net::UDPSocket::~UDPSocket() {
+Net::UDPSocket::~UDPSocket() {
 	Close();
 }
 
-void net::UDPSocket::Open(unsigned short port, bool reuse_addr) {
+void Net::UDPSocket::Open(unsigned short port, bool reuse_addr) {
 	handle_ = socket(PF_INET, SOCK_DGRAM, IPPROTO_UDP);
 	if (handle_ < 0) {
 		handle_ = 0;
@@ -158,7 +158,7 @@ void net::UDPSocket::Open(unsigned short port, bool reuse_addr) {
     SetBlocking(false);
 }
 
-void net::UDPSocket::Close() {
+void Net::UDPSocket::Close() {
 	if (handle_ != 0) {
 #ifdef _WIN32
 		closesocket(handle_);
@@ -169,7 +169,7 @@ void net::UDPSocket::Close() {
 	}
 }
 
-bool net::UDPSocket::Send(const Address &destination, const void *data, int size) {
+bool Net::UDPSocket::Send(const Address &destination, const void *data, int size) {
     assert(data);
     assert(size > 0);
 
@@ -187,7 +187,7 @@ bool net::UDPSocket::Send(const Address &destination, const void *data, int size
     return sent_bytes == size;
 }
 
-int net::UDPSocket::Receive(Address &sender, void *data, int size) {
+int Net::UDPSocket::Receive(Address &sender, void *data, int size) {
     assert(data);
     assert(size > 0);
 
@@ -212,25 +212,25 @@ int net::UDPSocket::Receive(Address &sender, void *data, int size) {
     return received_bytes;
 }
 
-bool net::UDPSocket::JoinMulticast(const Address &addr) {
+bool Net::UDPSocket::JoinMulticast(const Address &addr) {
     struct ip_mreq mreq;
     mreq.imr_interface.s_addr = htonl(local_addr_.address());
     mreq.imr_multiaddr.s_addr = htonl(addr.address());
     return setsockopt(handle_, IPPROTO_IP, IP_ADD_MEMBERSHIP, (const char *) &mreq, sizeof(mreq)) == 0;
 }
 
-bool net::UDPSocket::DropMulticast(const Address &addr) {
+bool Net::UDPSocket::DropMulticast(const Address &addr) {
     struct ip_mreq mreq;
     mreq.imr_interface.s_addr = htonl(local_addr_.address());
     mreq.imr_multiaddr.s_addr = htonl(addr.address());
     return setsockopt(handle_, IPPROTO_IP, IP_DROP_MEMBERSHIP, (const char *) &mreq, sizeof(mreq)) == 0;
 }
 
-bool net::UDPSocket::SetBlocking(bool is_blocking) {
-    return net::SetBlocking(handle_, is_blocking);
+bool Net::UDPSocket::SetBlocking(bool is_blocking) {
+    return Net::SetBlocking(handle_, is_blocking);
 }
 
-net::TCPSocket::TCPSocket() : handle_(0), connection_(0) {
+Net::TCPSocket::TCPSocket() : handle_(0), connection_(0) {
 	if (shrd_context.expired()) {
 		shrd_context = context_ = std::make_shared<SocketContext>();
 	} else {
@@ -238,7 +238,7 @@ net::TCPSocket::TCPSocket() : handle_(0), connection_(0) {
 	}
 }
 
-net::TCPSocket::TCPSocket(TCPSocket &&rhs) : context_(move(rhs.context_)),
+Net::TCPSocket::TCPSocket(TCPSocket &&rhs) : context_(move(rhs.context_)),
                                         handle_(rhs.handle_),
                                         connection_(rhs.connection_),
                                         remote_addr_(rhs.remote_addr_) {
@@ -247,12 +247,12 @@ net::TCPSocket::TCPSocket(TCPSocket &&rhs) : context_(move(rhs.context_)),
     rhs.remote_addr_ = Address();
 }
 
-net::TCPSocket::~TCPSocket() {
+Net::TCPSocket::~TCPSocket() {
 	Close();
 	CloseClient();
 }
 
-net::TCPSocket &net::TCPSocket::operator=(TCPSocket &&rhs) {
+Net::TCPSocket &Net::TCPSocket::operator=(TCPSocket &&rhs) {
     context_        = move(rhs.context_);
     handle_         = rhs.handle_;
     connection_     = rhs.connection_;
@@ -264,7 +264,7 @@ net::TCPSocket &net::TCPSocket::operator=(TCPSocket &&rhs) {
     return *this;
 }
 
-void net::TCPSocket::Open(unsigned short port, bool reuse_addr) {
+void Net::TCPSocket::Open(unsigned short port, bool reuse_addr) {
 	handle_ = socket(AF_INET, SOCK_STREAM, 0);
 	if (handle_ < 0) {
 		handle_ = 0;
@@ -291,7 +291,7 @@ void net::TCPSocket::Open(unsigned short port, bool reuse_addr) {
     SetBlocking(false);
 }
 
-void net::TCPSocket::Close() {
+void Net::TCPSocket::Close() {
 	if (handle_ != 0) {
 #ifdef _WIN32
 		closesocket(handle_);
@@ -302,7 +302,7 @@ void net::TCPSocket::Close() {
 	}
 }
 
-void net::TCPSocket::CloseClient() {
+void Net::TCPSocket::CloseClient() {
 	if (connection_ != 0) {
 #ifdef _WIN32
 		closesocket(connection_);
@@ -313,7 +313,7 @@ void net::TCPSocket::CloseClient() {
 	}
 }
 
-bool net::TCPSocket::Listen() {
+bool Net::TCPSocket::Listen() {
 	if (handle_ == 0) {
 		return false;
 	}
@@ -321,7 +321,7 @@ bool net::TCPSocket::Listen() {
 	return listen(handle_, 1024) == 0;
 }
 
-bool net::TCPSocket::Accept(bool is_blocking) {
+bool Net::TCPSocket::Accept(bool is_blocking) {
 	if (handle_ == 0) {
 		return false;
 	}
@@ -335,7 +335,7 @@ bool net::TCPSocket::Accept(bool is_blocking) {
 		return false;
 	}
 
-    net::SetBlocking(connection_, is_blocking);
+    Net::SetBlocking(connection_, is_blocking);
 
 	unsigned int address = ntohl(from.sin_addr.s_addr);
 	unsigned int port = ntohs(from.sin_port);
@@ -344,7 +344,7 @@ bool net::TCPSocket::Accept(bool is_blocking) {
 	return true;
 }
 
-bool net::TCPSocket::Connect(const Address &dest) {
+bool Net::TCPSocket::Connect(const Address &dest) {
 	if (handle_ == 0) {
 		return false;
 	}
@@ -387,7 +387,7 @@ bool net::TCPSocket::Connect(const Address &dest) {
 	return true;
 }
 
-bool net::TCPSocket::Send(const void *data, int size) {
+bool Net::TCPSocket::Send(const void *data, int size) {
 	assert(data);
 	assert(size > 0);
 
@@ -408,7 +408,7 @@ bool net::TCPSocket::Send(const void *data, int size) {
 	return sent_bytes == size;
 }
 
-int net::TCPSocket::Receive(void *data, int size) {
+int Net::TCPSocket::Receive(void *data, int size) {
 	assert(data);
 	assert(size > 0);
 
@@ -437,11 +437,11 @@ int net::TCPSocket::Receive(void *data, int size) {
 	return received_bytes;
 }
 
-bool net::TCPSocket::SetBlocking(bool is_blocking) {
-    return net::SetBlocking(handle_, is_blocking);
+bool Net::TCPSocket::SetBlocking(bool is_blocking) {
+    return Net::SetBlocking(handle_, is_blocking);
 }
 
-void net::TCPSocket::WaitClientComplete(int t_ms) {
+void Net::TCPSocket::WaitClientComplete(int t_ms) {
     /*int valopt;
     fd_set myset;
     struct timeval tv;
@@ -466,7 +466,7 @@ void net::TCPSocket::WaitClientComplete(int t_ms) {
     }*/
 }
 
-bool net::SetBlocking(int sock, bool is_blocking) {
+bool Net::SetBlocking(int sock, bool is_blocking) {
     bool ret = true;
 #ifdef WIN32
     /// @note windows sockets are created in blocking mode by default

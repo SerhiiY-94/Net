@@ -14,13 +14,13 @@ void test_udp_connection() {
         const float dt_s		= 0.001f;
         const float timeout_s	= 0.1f;
 
-        net::UDPConnection client(protocol_id, timeout_s);
-        net::UDPConnection server(protocol_id, timeout_s);
+        Net::UDPConnection client(protocol_id, timeout_s);
+        Net::UDPConnection server(protocol_id, timeout_s);
 
         assert_nothrow(client.Start(client_port));
         assert_nothrow(server.Start(server_port));
 
-        client.Connect(net::Address(127, 0, 0, 1, server_port));
+        client.Connect(Net::Address(127, 0, 0, 1, server_port));
         server.Listen();
 
         while (true) {
@@ -69,11 +69,11 @@ void test_udp_connection() {
         const float dt_s		= 0.001f;
         const float timeout_s	= 0.1f;
 
-        net::UDPConnection client(protocol_id, timeout_s);
+        Net::UDPConnection client(protocol_id, timeout_s);
 
         assert_nothrow(client.Start(client_port));
 
-        client.Connect(net::Address(127, 0, 0, 1, server_port));
+        client.Connect(Net::Address(127, 0, 0, 1, server_port));
 
         while (true) {
             if (!client.connecting()) {
@@ -108,13 +108,13 @@ void test_udp_connection() {
 
         // connect client to server
 
-        net::UDPConnection client(protocol_id, timeout_s);
-        net::UDPConnection server(protocol_id, timeout_s);
+        Net::UDPConnection client(protocol_id, timeout_s);
+        Net::UDPConnection server(protocol_id, timeout_s);
 
         assert_nothrow(client.Start(client_port));
         assert_nothrow(server.Start(server_port));
 
-        client.Connect(net::Address(127, 0, 0, 1, server_port));
+        client.Connect(Net::Address(127, 0, 0, 1, server_port));
         server.Listen();
 
         while (true) {
@@ -157,9 +157,9 @@ void test_udp_connection() {
 
         // attempt another connection, verify connect fails (busy)
 
-        net::UDPConnection busy(protocol_id, timeout_s);
+        Net::UDPConnection busy(protocol_id, timeout_s);
         assert_nothrow(busy.Start(client_port + 1));
-        busy.Connect(net::Address(127, 0, 0, 1, server_port));
+        busy.Connect(Net::Address(127, 0, 0, 1, server_port));
 
         while (true) {
             if (!busy.connecting() || busy.connected()) {
@@ -218,15 +218,15 @@ void test_udp_connection() {
         const float dt_s = 0.001f;
         const float timeout_s = 0.1f;
 
-        net::UDPConnection client(crotocol_id, timeout_s);
-        net::UDPConnection server(crotocol_id, timeout_s);
+        Net::UDPConnection client(crotocol_id, timeout_s);
+        Net::UDPConnection server(crotocol_id, timeout_s);
 
         assert_nothrow(client.Start(client_port));
         assert_nothrow(server.Start(server_port));
 
         // connect client and server
 
-        client.Connect(net::Address(127, 0, 0, 1, server_port));
+        client.Connect(Net::Address(127, 0, 0, 1, server_port));
         server.Listen();
 
         while (true) {
@@ -295,7 +295,7 @@ void test_udp_connection() {
 
         // reconnect client
 
-        client.Connect(net::Address(127, 0, 0, 1, server_port));
+        client.Connect(Net::Address(127, 0, 0, 1, server_port));
 
         while (true) {
             if (client.connected() && server.connected()) {
@@ -343,13 +343,13 @@ void test_udp_connection() {
         const float dt_s = 0.001f;
         const float timeout_s = 0.1f;
 
-        net::UDPConnection client(protocol_id, timeout_s);
-        net::UDPConnection server(protocol_id, timeout_s);
+        Net::UDPConnection client(protocol_id, timeout_s);
+        Net::UDPConnection server(protocol_id, timeout_s);
 
         assert_nothrow(client.Start(client_port));
         assert_nothrow(server.Start(server_port));
 
-        client.Connect(net::Address(127, 0, 0, 1, server_port));
+        client.Connect(Net::Address(127, 0, 0, 1, server_port));
         server.Listen();
 
         while (true) {

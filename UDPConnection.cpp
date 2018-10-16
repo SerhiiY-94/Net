@@ -5,25 +5,25 @@
 
 #include "hash/Crc32.h"
 
-net::UDPConnection::UDPConnection(unsigned int protocol_id, float timeout_s)
+Net::UDPConnection::UDPConnection(unsigned int protocol_id, float timeout_s)
 : protocol_id_(protocol_id), timeout_s_(timeout_s), running_(false), mode_(NONE) {
 	ClearData();
 }
 
-net::UDPConnection::~UDPConnection() {
+Net::UDPConnection::~UDPConnection() {
 	if (running_) {
 		Stop();
 	}
 }
 
-void net::UDPConnection::Start(int port) {
+void Net::UDPConnection::Start(int port) {
 	assert(!running_);
 	socket_.Open(port);
 	running_ = true;
 	OnStart();
 }
 
-void net::UDPConnection::Stop() {
+void Net::UDPConnection::Stop() {
 	assert(running_);
 	bool conn = connected();
 	ClearData();
@@ -35,7 +35,7 @@ void net::UDPConnection::Stop() {
 	OnStop();
 }
 
-void net::UDPConnection::Listen() {
+void Net::UDPConnection::Listen() {
 	bool conn = connected();
 	ClearData();
 	if (conn) {
@@ -45,7 +45,7 @@ void net::UDPConnection::Listen() {
 	state_	= LISTENING;
 }
 
-void net::UDPConnection::Connect(const Address &address) {
+void Net::UDPConnection::Connect(const Address &address) {
 	printf("client connecting to %d.%d.%d.%d:%d\n", address.a(), address.b(), address.c(), address.d(), address.port());
 	bool conn = connected();
 	ClearData();
@@ -57,7 +57,7 @@ void net::UDPConnection::Connect(const Address &address) {
 	address_	= address;
 }
 
-void net::UDPConnection::Update(float dt_s) {
+void Net::UDPConnection::Update(float dt_s) {
 	assert(running_);
 	timeout_acc_ += dt_s;
 	if (timeout_acc_ > timeout_s_) {
@@ -77,7 +77,7 @@ void net::UDPConnection::Update(float dt_s) {
 	}
 }
 
-bool net::UDPConnection::SendPacket(const unsigned char data[], int size) {
+bool Net::UDPConnection::SendPacket(const unsigned char data[], int size) {
 	assert(running_);
 	assert(MAX_PACKET_SIZE >= size + 4);
 	if (address_.address() == 0) {
@@ -105,7 +105,7 @@ bool net::UDPConnection::SendPacket(const unsigned char data[], int size) {
 #endif
 }
 
-int net::UDPConnection::ReceivePacket(unsigned char data[], int size) {
+int Net::UDPConnection::ReceivePacket(unsigned char data[], int size) {
     Address sender;
 	assert(running_);
 #ifndef __EMSCRIPTEN__

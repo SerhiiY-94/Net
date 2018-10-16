@@ -31,7 +31,7 @@
 
 //#undef TEST_BE
 
-namespace net {
+namespace Net {
     template<typename T>
     T swap_endian(T u) {
         static_assert(CHAR_BIT == 8, "CHAR_BIT != 8");
@@ -48,7 +48,7 @@ namespace net {
 }
 
 #if _ENDIANNESS_ == LITTLE_ENDIAN && !defined(TEST_BE)
-namespace net {
+namespace Net {
     typedef int16_t     le_int16;
     typedef uint16_t    le_uint16;
     typedef int32_t     le_int32;
@@ -66,15 +66,15 @@ namespace net {
     }
 }
 #elif _ENDIANNESS_ == BIG_ENDIAN || defined(TEST_BE)
-namespace net {
+namespace Net {
 #pragma pack(push,1)
     template<typename T>
     class le_type {
     public:
         le_type() : le_val_(0) { }
-        le_type(const T &val) : le_val_(net::swap_endian<T>(val)) { }
+        le_type(const T &val) : le_val_(Net::swap_endian<T>(val)) { }
         operator T() const {
-            return net::swap_endian<T>(le_val_);
+            return Net::swap_endian<T>(le_val_);
         }
         le_type<T> operator+=(const le_type<T> &f) {
             return le_type<T>((T)le_val_ + (T)f.le_val_);
@@ -89,7 +89,7 @@ namespace net {
             return le_type<T>((T)le_val_ / (T)f.le_val_);
         }
 		le_type<T>& operator=(const T &f) {
-			le_val_ = net::swap_endian<T>(f);
+			le_val_ = Net::swap_endian<T>(f);
 			return *this;
 		}
         /*le_type<T> operator+(const le_type<T> &f1, const le_type<T> &f2) {

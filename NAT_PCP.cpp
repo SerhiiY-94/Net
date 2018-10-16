@@ -9,7 +9,7 @@
     #include <arpa/inet.h>
 #endif
 
-bool net::GenPCPNonce(void *buf, int len) {
+bool Net::GenPCPNonce(void *buf, int len) {
     if (len < 12) return false;
 
     int32_t *p = (int32_t *)buf;
@@ -22,7 +22,7 @@ bool net::GenPCPNonce(void *buf, int len) {
 
 /*************** PCPRequest ***************/
 
-bool net::PCPRequest::Read(const void *buf, int size) {
+bool Net::PCPRequest::Read(const void *buf, int size) {
     uint8_t *p = (uint8_t *)buf;
 
     if (size < 24) return false;
@@ -33,7 +33,7 @@ bool net::PCPRequest::Read(const void *buf, int size) {
 
     lifetime_ = ntohl(*(uint32_t*)(&p[4]));
 
-    client_address_ = net::Address(p[20], p[21], p[22], p[23], 0);
+    client_address_ = Net::Address(p[20], p[21], p[22], p[23], 0);
 
     p = &p[24];
     if (opcode_ == OP_ANNOUNCE) {
@@ -47,7 +47,7 @@ bool net::PCPRequest::Read(const void *buf, int size) {
         internal_port_ = ntohs(*(uint16_t *) (&p[16]));
         external_port_ = ntohs(*(uint16_t *) (&p[18]));
 
-        external_address_ = net::Address(p[32], p[33], p[34], p[35], 0);
+        external_address_ = Net::Address(p[32], p[33], p[34], p[35], 0);
 
         return true;
     } else if (opcode_ == OP_PEER) {
@@ -59,10 +59,10 @@ bool net::PCPRequest::Read(const void *buf, int size) {
         internal_port_ = ntohs(*(uint16_t *) (&p[16]));
         external_port_ = ntohs(*(uint16_t *) (&p[18]));
 
-        external_address_ = net::Address(p[32], p[33], p[34], p[35], 0);
+        external_address_ = Net::Address(p[32], p[33], p[34], p[35], 0);
 
         remote_port_ = ntohs(*(uint16_t *) (&p[36]));
-        remote_address_ = net::Address(p[52], p[53], p[54], p[55], 0);
+        remote_address_ = Net::Address(p[52], p[53], p[54], p[55], 0);
 
         return true;
     } else {
@@ -70,7 +70,7 @@ bool net::PCPRequest::Read(const void *buf, int size) {
     }
 }
 
-int net::PCPRequest::Write(void *buf, int size) const {
+int Net::PCPRequest::Write(void *buf, int size) const {
     uint8_t *p = (uint8_t *)buf;
 
     if (opcode_ == OP_NONE || size < 24) return -1;
@@ -166,7 +166,7 @@ int net::PCPRequest::Write(void *buf, int size) const {
 
 /*************** PCPResponse ***************/
 
-bool net::PCPResponse::Read(const void *buf, int size) {
+bool Net::PCPResponse::Read(const void *buf, int size) {
     uint8_t *p = (uint8_t *)buf;
 
     if (size < 24) return false;
@@ -191,7 +191,7 @@ bool net::PCPResponse::Read(const void *buf, int size) {
         internal_port_ = ntohs(*(uint16_t*)(&p[16]));
         external_port_ = ntohs(*(uint16_t*)(&p[18]));
 
-        external_address_ = net::Address(p[32], p[33], p[34], p[35], 0);
+        external_address_ = Address(p[32], p[33], p[34], p[35], 0);
 
         return true;
     } else if (opcode_ == OP_PEER) {
@@ -203,11 +203,11 @@ bool net::PCPResponse::Read(const void *buf, int size) {
         internal_port_ = ntohs(*(uint16_t*)(&p[16]));
         external_port_ = ntohs(*(uint16_t*)(&p[18]));
 
-        external_address_ = net::Address(p[32], p[33], p[34], p[35], 0);
+        external_address_ = Net::Address(p[32], p[33], p[34], p[35], 0);
 
         remote_port_ = ntohs(*(uint16_t*)(&p[36]));
 
-        remote_address_ = net::Address(p[52], p[53], p[54], p[55], 0);
+        remote_address_ = Address(p[52], p[53], p[54], p[55], 0);
 
         return true;
     } else {
@@ -215,7 +215,7 @@ bool net::PCPResponse::Read(const void *buf, int size) {
     }
 }
 
-int net::PCPResponse::Write(void *buf, int size) const {
+int Net::PCPResponse::Write(void *buf, int size) const {
     uint8_t *p = (uint8_t *)buf;
 
     if (opcode_ == OP_NONE || size < 24) return -1;
@@ -305,7 +305,7 @@ int net::PCPResponse::Write(void *buf, int size) const {
 
 /*************** PCPSession ***************/
 
-void net::PCPSession::Update(unsigned int dt_ms) {
+void Net::PCPSession::Update(unsigned int dt_ms) {
     char buf[128];
 
     main_timer_ += dt_ms;
@@ -330,7 +330,7 @@ void net::PCPSession::Update(unsigned int dt_ms) {
             rt_ = RT(rt_);
         }
 
-        net::Address sender;
+        Address sender;
         int rcv_size = sock_.Receive(sender, buf, sizeof(buf));
         if (rcv_size && sender == pcp_server_) {
             PCPResponse resp;
@@ -356,6 +356,6 @@ void net::PCPSession::Update(unsigned int dt_ms) {
     } else if (state_ == IDLE_FAILED) {}
 }
 
-float net::PCPSession::RT(float rt) {
+float Net::PCPSession::RT(float rt) {
 	return (1 + RAND()) * std::min<float>(2 * rt, (float)MRT);
 }

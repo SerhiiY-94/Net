@@ -3,7 +3,7 @@
 #include "UDPConnection.h"
 #include "ReliabilitySystem.h"
 
-namespace net {
+namespace Net {
 	class ReliableUDPConnection : public UDPConnection {
 	public:
 		ReliableUDPConnection(unsigned int protocol_id, float timeout, unsigned int max_sequence = 0xFFFFFFFF);

@@ -3,7 +3,7 @@
 #include <cstdint>
 #include <cstdlib>
 
-namespace net {
+namespace Net {
     class BitMsg {
     protected:
         int write_bit_;

@@ -6,7 +6,7 @@
 #include "Address.h"
 #include "Socket.h"
 
-namespace net {
+namespace Net {
     enum PCPOpCode {
         OP_NONE = -1,
         OP_ANNOUNCE = 0,
@@ -52,7 +52,7 @@ namespace net {
     class PCPRequest {
         PCPOpCode opcode_;
         uint32_t lifetime_;
-        net::Address client_address_, external_address_, remote_address_;
+        Net::Address client_address_, external_address_, remote_address_;
         PCPNonce nonce_;
         PCPProto proto_;
         uint16_t internal_port_, external_port_;
@@ -63,20 +63,20 @@ namespace net {
 
         PCPOpCode opcode() const { return opcode_; }
         uint32_t lifetime() const { return lifetime_; }
-        net::Address client_address() const { return client_address_; }
-        net::Address external_address() const { return external_address_; }
+        Net::Address client_address() const { return client_address_; }
+        Net::Address external_address() const { return external_address_; }
         PCPNonce nonce() const { return nonce_; }
         PCPProto proto() const { return proto_; }
         uint16_t internal_port() const { return internal_port_; }
         uint16_t external_port() const { return external_port_; }
         uint16_t remote_port() const { return remote_port_; }
-        net::Address remote_address() const { return remote_address_; }
+        Net::Address remote_address() const { return remote_address_; }
 
-        void set_external_address(const net::Address &addr) {
+        void set_external_address(const Address &addr) {
             external_address_ = addr;
         }
 
-        void MakeAnnounceRequest(const net::Address &client_address) {
+        void MakeAnnounceRequest(const Address &client_address) {
             opcode_         = OP_ANNOUNCE;
             lifetime_       = 0;
             client_address_ = client_address;
@@ -86,7 +86,7 @@ namespace net {
                             uint16_t internal_port,
                             uint16_t external_port,
                             uint32_t lifetime,
-                            const net::Address &client_address,
+                            const Address &client_address,
                             const PCPNonce &nonce) {
             opcode_         = OP_MAP;
             proto_          = proto;
@@ -101,9 +101,9 @@ namespace net {
                              uint16_t internal_port,
                              uint16_t external_port,
                              uint32_t lifetime,
-                             const net::Address &external_address,
+                             const Address &external_address,
                              uint16_t remote_port,
-                             const net::Address &remote_address,
+                             const Address &remote_address,
                              const PCPNonce &nonce) {
             opcode_             = OP_PEER;
             proto_              = proto;
@@ -127,7 +127,7 @@ namespace net {
         uint32_t time_;
         PCPNonce nonce_;
         PCPProto proto_;
-        net::Address external_address_, remote_address_;
+        Address external_address_, remote_address_;
         uint16_t internal_port_, external_port_, remote_port_;
     public:
         PCPResponse() : opcode_(OP_NONE) {}
@@ -136,7 +136,7 @@ namespace net {
         PCPResCode res_code() const { return res_code_; }
         uint32_t lifetime() const { return lifetime_; }
         uint32_t time() const { return time_; }
-        net::Address external_address() const { return external_address_; }
+        Address external_address() const { return external_address_; }
         PCPNonce nonce() const { return nonce_; }
         PCPProto proto() const { return proto_; }
         uint16_t internal_port() const { return internal_port_; }
@@ -154,7 +154,7 @@ namespace net {
                              uint16_t external_port,
                              uint32_t lifetime,
                              uint32_t time,
-                             const net::Address &external_address,
+                             const Address &external_address,
                              const PCPNonce &nonce) {
             opcode_             = OP_MAP;
             res_code_           = res_code;
@@ -173,9 +173,9 @@ namespace net {
                               uint16_t external_port,
                               uint32_t lifetime,
                               uint32_t time,
-                              const net::Address &external_address,
+                              const Address &external_address,
                               uint16_t remote_port,
-                              const net::Address &remote_address,
+                              const Address &remote_address,
                               const PCPNonce &nonce) {
             opcode_             = OP_PEER;
             res_code_           = res_code;
@@ -203,7 +203,7 @@ namespace net {
         };
 
         PCPSession(PCPProto proto,
-                   const net::Address &pcp_server,
+                   const Address &pcp_server,
                    uint16_t internal_port,
                    uint16_t external_port,
                    unsigned int lifetime = 7200)
@@ -223,7 +223,7 @@ namespace net {
             sock_.Open(0);
         }
 
-        net::Address local_addr() const {
+        Address local_addr() const {
             return sock_.local_addr();
         }
 
@@ -245,11 +245,11 @@ namespace net {
 
         unsigned int request_counter_;
 
-        net::Address external_addr_;
+        Address external_addr_;
         unsigned int mapped_time_;
 
-        net::Address pcp_server_;
-        net::UDPSocket sock_;
+        Address pcp_server_;
+        UDPSocket sock_;
 
         static const unsigned int IRT = 3;
         static const unsigned int MRC = 0; //should be 0

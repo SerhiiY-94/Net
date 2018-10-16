@@ -4,7 +4,7 @@
 
 #include "HTTPBase.h"
 
-namespace net {
+namespace Net {
 	class HTTPResponse : public HTTPBase {
 		int resp_code_;
 		std::string status_line_;

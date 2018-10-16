@@ -7,7 +7,7 @@
 #include "Types.h"
 #include "Var.h"
 
-namespace net {
+namespace Net {
 typedef std::vector<unsigned char> Packet;
 class VarContainer {
 public:

@@ -4,7 +4,7 @@
 
 #include "Socket.h"
 
-namespace net {
+namespace Net {
     class HTTPRequest;
 
     class WsConnection {
@@ -16,7 +16,7 @@ namespace net {
         WsConnection(TCPSocket &&conn, const HTTPRequest &upgrade_req, bool should_mask = false);
 		WsConnection(WsConnection &&rhs);
 
-        net::Address remote_addr() const {
+        Address remote_addr() const {
             return conn_.remote_addr();
         }
 

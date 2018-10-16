@@ -8,7 +8,7 @@
 void test_tcp_socket() {
 
     {   // TCPSocket open/close
-        net::TCPSocket socket;
+        Net::TCPSocket socket;
         assert(!socket.IsOpen());
         assert_nothrow(socket.Open(30000));
         assert(socket.IsOpen());
@@ -19,7 +19,7 @@ void test_tcp_socket() {
     }
 
     {   // TCPSocket same port fail
-        net::TCPSocket a, b;
+        Net::TCPSocket a, b;
         assert_nothrow(a.Open(30000, false));
         assert_throws(b.Open(30000, false));
         assert(a.IsOpen());
@@ -27,7 +27,7 @@ void test_tcp_socket() {
     }
 
     {   // TCPSocket send and receive packets
-        net::TCPSocket a, b;
+        Net::TCPSocket a, b;
         assert_nothrow(a.Open(30000));
         assert_nothrow(b.Open(30001));
         const char packet[] = "packet data";
@@ -51,7 +51,7 @@ void test_tcp_socket() {
                 std::this_thread::sleep_for(std::chrono::milliseconds(10));
             }
         });
-        assert(a.Connect(net::Address(127, 0, 0, 1, 30001)));
+        assert(a.Connect(Net::Address(127, 0, 0, 1, 30001)));
         assert(a.Send(packet, sizeof(packet)));
         thr.join();
     }

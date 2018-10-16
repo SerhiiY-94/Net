@@ -5,7 +5,7 @@
 
 #include "Address.h"
 
-namespace net {
+namespace Net {
 	enum MethodType { GET, POST };
 	enum HTTPVer {_1_0, _1_1};
 	struct Method {

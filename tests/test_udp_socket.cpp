@@ -7,7 +7,7 @@
 void test_udp_socket() {
 
     {   // UDPSocket open/close
-        net::UDPSocket socket;
+        Net::UDPSocket socket;
         assert(!socket.IsOpen());
         assert_nothrow(socket.Open(30000));
         assert(socket.IsOpen());
@@ -18,7 +18,7 @@ void test_udp_socket() {
     }
 
     {   // UDPSocket same port fail
-        net::UDPSocket a, b;
+        Net::UDPSocket a, b;
         assert_nothrow(a.Open(30000, false));
         assert_throws(b.Open(30000, false));
         assert(a.IsOpen());
@@ -26,18 +26,18 @@ void test_udp_socket() {
     }
 
     {   // UDPSocket send and receive packets
-        net::UDPSocket a, b;
+        Net::UDPSocket a, b;
         assert_nothrow(a.Open(30000));
         assert_nothrow(b.Open(30001));
         const char packet[] = "packet data";
         bool a_received_packet = false;
         bool b_received_packet = false;
         while (!a_received_packet && !b_received_packet) {
-            assert(a.Send(net::Address(127, 0, 0, 1, 30001), packet, sizeof(packet)));
-            assert(b.Send(net::Address(127, 0, 0, 1, 30000), packet, sizeof(packet)));
+            assert(a.Send(Net::Address(127, 0, 0, 1, 30001), packet, sizeof(packet)));
+            assert(b.Send(Net::Address(127, 0, 0, 1, 30000), packet, sizeof(packet)));
 
             while (true) {
-                net::Address sender;
+                Net::Address sender;
                 char buffer[256];
                 int bytes_read = a.Receive(sender, buffer, sizeof(buffer));
                 if (bytes_read == 0) {
@@ -49,7 +49,7 @@ void test_udp_socket() {
             }
 
             while (true) {
-                net::Address sender;
+                Net::Address sender;
                 char buffer[256];
                 int bytes_read = b.Receive(sender, buffer, sizeof(buffer));
                 if (bytes_read == 0) {

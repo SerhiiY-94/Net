@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace net {
+namespace Net {
 	class Address {
 	public:
 		Address() {

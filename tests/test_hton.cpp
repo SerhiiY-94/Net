@@ -3,7 +3,7 @@
 #include "../Types.h"
 
 void test_hton() {
-    using namespace net;
+    using namespace Net;
 
     {   // uint32_t
         uint32_t v1 = 0x12345678;
